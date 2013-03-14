@@ -34,6 +34,13 @@ public class AppFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+	}
+	
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
 		AppAdapter adapter = new AppAdapter(getActivity(), getData());
 		setListAdapter(adapter);
 	}
