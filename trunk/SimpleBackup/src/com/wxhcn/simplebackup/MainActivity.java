@@ -78,7 +78,7 @@ public class MainActivity extends FragmentActivity {
 				fragment = new AppFragment();
 				args.putInt(AppFragment.ARG_SECTION_NUMBER, position + 1);
 			} else {
-				fragment = new SmsFragment();
+				fragment = new AppFragment();
 				args.putInt(SmsFragment.ARG_SECTION_NUMBER, position + 1);
 			}
 
