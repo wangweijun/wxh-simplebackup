@@ -50,7 +50,7 @@ public class AppAdapter extends BaseAdapter {
 		if(view==null)
 		{
     		LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		view=layoutInflater.inflate(R.layout.applist, null);
+    		view=layoutInflater.inflate(R.layout.appitem, null);
     		view.setClickable(true);
 		}
     	ImageView appIcon=(ImageView)view.findViewById(R.id.app_icon);
