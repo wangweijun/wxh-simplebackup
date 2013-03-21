@@ -27,22 +27,17 @@ public class AppFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		return inflater.inflate(R.layout.fragment, container, false);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		
+		return inflater.inflate(R.layout.fragment, container, false);
 	}
 	
 	@Override
-	public void onStart() {
+	public void onResume() {
 		// TODO Auto-generated method stub
-		super.onStart();
-		AppAdapter adapter = new AppAdapter(getActivity(), getData());
-		setListAdapter(adapter);
+	    AppAdapter adapter = new AppAdapter(getActivity(), getData());
+        setListAdapter(adapter);
+		super.onResume();
+
 	}
 
 //	public void onListItemClick(ListView parent, View v, int position, long id) {

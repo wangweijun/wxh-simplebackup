@@ -1,51 +1,40 @@
 package com.wxhcn.simplebackup.sms;
 
 public class SmsInfo {
-	private String phoneNumber;
-	private String date;
-	private String name;
-	private String sms;
-	private String type;
+    private String thread_id;
+    private String address;
+    private String person;
+    private int    number;
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getThread_id() {
+        return thread_id;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setThread_id(String thread_id) {
+        this.thread_id = thread_id;
+    }
 
-	public String getDate() {
-		return date;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setDate(String data) {
-		this.date = data;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getPerson() {
+        return person;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setPerson(String person) {
+        this.person = person;
+    }
 
-	public String getSms() {
-		return sms;
-	}
+    public int getNumber() {
+        return number;
+    }
 
-	public void setSms(String sms) {
-		this.sms = sms;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-
+    public void setNumber(int number) {
+        this.number = number;
+    }
 }
