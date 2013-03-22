@@ -11,7 +11,7 @@ public class DBAccess {
         ContentResolver contentResolver = context.getContentResolver();
         if (uri == null || projection == null)
             return null;
-        return contentResolver.query(uri, projection, "0=0) group by "
+        return contentResolver.query(uri, projection, "0=0) group by ("
                 + GroupBy, null, null);
     }
 }
