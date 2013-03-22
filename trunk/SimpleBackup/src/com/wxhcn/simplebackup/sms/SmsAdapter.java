@@ -52,6 +52,8 @@ public class SmsAdapter extends BaseAdapter {
             view.setClickable(true);
         }
         final SmsInfo smsInfo = arrayList.get(position);
+        if (smsInfo == null)
+            return view;
         TextView address = (TextView) view.findViewById(R.id.sms_address);
         if (address != null)
             address.setText("(" + smsInfo.getAddress() + ")");
