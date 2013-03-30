@@ -21,11 +21,22 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int ic_action_accept=0x7f020000;
+        public static final int ic_action_cancel=0x7f020001;
+        public static final int ic_action_delete=0x7f020002;
+        public static final int ic_action_multi_select=0x7f020003;
+        public static final int ic_action_new=0x7f020004;
+        public static final int ic_action_overflow=0x7f020005;
+        public static final int ic_action_save=0x7f020006;
+        public static final int ic_action_select_all=0x7f020007;
+        public static final int ic_action_settings=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f080007;
-        public static final int action_settings=0x7f08000c;
+        public static final int action_multi_select=0x7f08000c;
+        public static final int action_overflow=0x7f08000d;
+        public static final int action_setting=0x7f08000e;
         public static final int app_check=0x7f080005;
         public static final int app_icon=0x7f080002;
         public static final int app_info=0x7f080004;
@@ -52,6 +63,8 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
+        public static final int menu_add=0x7f050006;
+        public static final int sms_no_message=0x7f050005;
         public static final int title_app=0x7f050003;
         public static final int title_home=0x7f050002;
         public static final int title_sms=0x7f050004;
