@@ -2,7 +2,11 @@ package com.Cissoid.simplebackup;
 
 import java.lang.reflect.Field;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -30,6 +34,12 @@ public class MainActivity extends FragmentActivity
     private SectionPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Menu menu;
+    private AppService appService;
+    private SimpleBackupApplication application=(SimpleBackupApplication) getApplication();
+    public AppService getService()
+    {
+        return appService;
+    }
 
     public Menu getMenu()
     {
@@ -67,7 +77,28 @@ public class MainActivity extends FragmentActivity
         {
             // Ignore
         }
+
+        Intent intent = new Intent(this, AppService.class);
+        bindService(intent, connection, BIND_AUTO_CREATE);
     }
+
+    private ServiceConnection connection = new ServiceConnection()
+    {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name)
+        {
+            appService = null;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service)
+        {
+            appService = ((AppService.ServiceBinder) service).getService();
+            System.out.println("Service连接成功");
+            // 执行Service内部自己的方法
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -75,8 +106,15 @@ public class MainActivity extends FragmentActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         this.menu = menu;
-        // MenuItem menuItem=menu.findItem(R.id.menu_add);
-        // menuItem.setIcon(android.R.drawable.ic_menu_add);
+
         return true;
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        unbindService(connection);
     }
 }

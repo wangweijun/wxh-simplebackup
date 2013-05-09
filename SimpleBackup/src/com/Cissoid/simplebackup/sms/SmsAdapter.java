@@ -14,7 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Cissoid.simplebackup.util.DBAccess;
+import com.Cissoid.simplebackup.util.DBUtil;
 import com.wxhcn.simplebackup.R;
 
 public class SmsAdapter extends BaseAdapter {
@@ -83,7 +83,7 @@ public class SmsAdapter extends BaseAdapter {
         String[] projection = new String[] { "distinct " + SmsField.THREAD_ID,
                 SmsField.ADDRESS,
                 "COUNT(" + SmsField.THREAD_ID + ") AS 'count'" };
-        Cursor cursor = DBAccess.query(context, URI, projection,
+        Cursor cursor = DBUtil.query(context, URI, projection,
                 SmsField.THREAD_ID);
         int thread_id = cursor.getColumnIndex(SmsField.THREAD_ID);
         int address = cursor.getColumnIndex(SmsField.ADDRESS);

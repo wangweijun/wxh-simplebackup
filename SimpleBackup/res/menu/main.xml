@@ -1,18 +1,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/action_multi_select"
-        android:icon="@drawable/ic_action_multi_select"
-        android:showAsAction="always"
-        android:title="@string/menu_add"/>
-    <item
-        android:id="@+id/action_overflow"
-        android:icon="@drawable/ic_action_overflow"
-        android:showAsAction="always"
-        android:title="@string/action_settings">
-        <menu>
-            <item android:id="@+id/action_setting"/>
-        </menu>
-    </item>
+    <group android:id="@+id/MENU_GROUP_MAIN" >
+        <item
+            android:id="@+id/action_multi_select"
+            android:icon="@drawable/ic_action_multi_select"
+            android:showAsAction="always"
+            android:title="@string/menu_add"/>
+        <item
+            android:id="@+id/action_overflow"
+            android:icon="@drawable/ic_action_overflow"
+            android:showAsAction="always"
+            android:title="@string/action_settings">
+            <menu>
+                <item android:id="@+id/action_setting"/>
+            </menu>
+        </item>
+    </group>
+    <group android:id="@+id/MENU_GROUP_MULTI" android:visible="false">
+        <item
+            android:id="@+id/action_select_all"
+            android:icon="@drawable/ic_action_select_all" android:showAsAction="always"/>
+        <item
+            android:id="@+id/action_accept"
+            android:icon="@drawable/ic_action_accept"
+            android:title="@string/menu_accept" android:showAsAction="always"/>
+        <item android:id="@+id/action_cancel" android:icon="@drawable/ic_action_cancel" android:showAsAction="always"></item>
+    </group>
 
 </menu>
