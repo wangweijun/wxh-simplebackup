@@ -1,7 +1,5 @@
 package com.Cissoid.simplebackup;
 
-import java.util.Locale;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -66,7 +64,6 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
     @Override
     public CharSequence getPageTitle(int position)
     {
-        Locale l = Locale.getDefault();
         switch (position)
         {
         case 0:
