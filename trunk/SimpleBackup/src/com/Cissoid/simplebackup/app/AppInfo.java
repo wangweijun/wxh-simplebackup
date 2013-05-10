@@ -8,6 +8,10 @@ import android.graphics.drawable.Drawable;
  */
 public class AppInfo
 {
+    public static final int TYPE_LOCAL = 1;
+    public static final int TYPE_SDCARD = 2;
+    private int id;
+    private int type;
     /**
      * 应用名称
      */
@@ -39,6 +43,23 @@ public class AppInfo
     private String backupTime = "无备份";
 
     /**
+     * @return the id
+     */
+    public int getId()
+    {
+        return id;
+    }
+
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId( int id )
+    {
+        this.id = id;
+    }
+
+    /**
      * @return the name
      */
     public String getName()
@@ -50,7 +71,7 @@ public class AppInfo
      * @param name
      *            the name to set
      */
-    public void setName(String name)
+    public void setName( String name )
     {
         this.name = name;
     }
@@ -67,7 +88,7 @@ public class AppInfo
      * @param packageName
      *            the packageName to set
      */
-    public void setPackageName(String packageName)
+    public void setPackageName( String packageName )
     {
         this.packageName = packageName;
     }
@@ -84,7 +105,7 @@ public class AppInfo
      * @param version
      *            the version to set
      */
-    public void setVersion(String version)
+    public void setVersion( String version )
     {
         this.version = version;
     }
@@ -101,7 +122,7 @@ public class AppInfo
      * @param versionCode
      *            the versionCode to set
      */
-    public void setVersionCode(int versionCode)
+    public void setVersionCode( int versionCode )
     {
         this.versionCode = versionCode;
     }
@@ -118,7 +139,7 @@ public class AppInfo
      * @param icon
      *            the icon to set
      */
-    public void setIcon(Drawable icon)
+    public void setIcon( Drawable icon )
     {
         this.icon = icon;
     }
@@ -135,7 +156,7 @@ public class AppInfo
      * @param appPath
      *            the appPath to set
      */
-    public void setAppPath(String appPath)
+    public void setAppPath( String appPath )
     {
         this.appPath = appPath;
     }
@@ -152,7 +173,7 @@ public class AppInfo
      * @param dataPath
      *            the dataPath to set
      */
-    public void setDataPath(String dataPath)
+    public void setDataPath( String dataPath )
     {
         this.dataPath = dataPath;
     }
@@ -169,8 +190,25 @@ public class AppInfo
      * @param backupTime
      *            the backupTime to set
      */
-    public void setBackupTime(String backupTime)
+    public void setBackupTime( String backupTime )
     {
         this.backupTime = backupTime;
     }
+
+    /**
+     * @return the type
+     */
+    public int getType()
+    {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType( int type )
+    {
+        this.type = type;
+    }
+
 }

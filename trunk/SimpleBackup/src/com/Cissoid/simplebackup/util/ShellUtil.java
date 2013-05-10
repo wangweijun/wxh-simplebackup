@@ -10,7 +10,7 @@ public class ShellUtil
         // StringBuilder stringBuilder = null;
         try
         {
-            Process process = Runtime.getRuntime().exec(cmd);
+            Runtime.getRuntime().exec(cmd);
             // BufferedReader bufferedReader = new BufferedReader(
             // new InputStreamReader(process.getInputStream()));
             //
@@ -24,12 +24,18 @@ public class ShellUtil
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
             return false;
         }
         return true;
     }
 
+    /**
+     * root权限执行命令
+     * 
+     * @param cmd
+     *            命令
+     * @return 成功：true 失败：false
+     */
     static public boolean RootCmd(String cmd)
     {
         Process process = null;
