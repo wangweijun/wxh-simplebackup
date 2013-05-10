@@ -82,7 +82,7 @@ public class AppAdapter extends BaseAdapter
             public void onClick(View v)
             {
                 AppInfoDialog appInfoDialog = AppInfoDialog
-                        .newInstance(appItem);
+                        .newInstance(fragment.getActivity(),appItem);
                 appInfoDialog.show(fragment.getFragmentManager(), "info");
             }
         });
