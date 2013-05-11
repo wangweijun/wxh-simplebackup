@@ -72,7 +72,7 @@ public class AppAdapter extends BaseAdapter
         final AppInfo appItem = applist.getItem(position);
         LayoutInflater layoutInflater = (LayoutInflater) fragment.getActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = layoutInflater.inflate(R.layout.appitem, null);
+        view = layoutInflater.inflate(R.layout.app_info, null);
         view.setClickable(true);
 
         // 单击应用条目，显示详情

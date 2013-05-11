@@ -72,7 +72,8 @@ public class AppInfoDialog extends DialogFragment
             @Override
             public void onClick( View v )
             {
-                onBackup();
+                appInfo.backup();
+                dismiss();
             }
         });
         restoreButton.setOnClickListener(new OnClickListener()
@@ -81,7 +82,8 @@ public class AppInfoDialog extends DialogFragment
             @Override
             public void onClick( View v )
             {
-                restore();
+                appInfo.restore();
+                dismiss();
             }
         });
         uninstallButton.setOnClickListener(new OnClickListener()
@@ -90,49 +92,11 @@ public class AppInfoDialog extends DialogFragment
             @Override
             public void onClick( View v )
             {
-                uninstall();
+                appInfo.uninstall();
+                dismiss();
             }
         });
         dialog.setContentView(view);
         return dialog;
-    }
-
-    private void onBackup()
-    {
-        SimpleBackupApplication application = ((SimpleBackupApplication) getActivity()
-                .getApplication());
-        final Handler handler = ((MainActivity) getActivity()).getHandler();
-        application.getExecutorService()
-                .submit(new AppThread(handler, appInfo));
-        this.dismiss();
-    }
-
-    private void restore()
-    {
-        if ( !ShellUtil.Cmd("busybox") )
-        {
-            Toast.makeText(getActivity(), "busybox not found",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // 应用安装目录
-        String originalAppPath = appInfo.getAppPath();
-        // 应用数据目录
-        String originalDataPath = appInfo.getDataPath();
-        // 备份目录
-        String backupPath = Environment.getExternalStorageDirectory()
-                + "/SimpleBackup/" + appInfo.getPackageName();
-        if ( CopyUtil.copyFile(backupPath + ".apk", originalAppPath)
-                && CopyUtil.copyWithRoot(backupPath, originalDataPath) )
-            Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
-    }
-
-    private void uninstall()
-    {
-        this.dismiss();
-        Uri uri = Uri.fromParts("package", appInfo.getPackageName(), null);
-        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
-        getActivity().startActivity(intent);
-
     }
 }

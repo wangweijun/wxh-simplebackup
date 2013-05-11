@@ -1,7 +1,10 @@
 package com.Cissoid.simplebackup.app;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import android.app.Notification;
@@ -13,6 +16,7 @@ import android.os.Message;
 import com.Cissoid.simplebackup.MainActivity;
 import com.Cissoid.simplebackup.util.CopyUtil;
 import com.Cissoid.simplebackup.util.ShellUtil;
+import com.Cissoid.simplebackup.util.XmlUtil;
 import com.Cissoid.simplebackup.util.ZipUtil;
 
 public class AppThread implements Runnable
@@ -88,23 +92,33 @@ public class AppThread implements Runnable
             {
                 ZipUtil.zipFiles(resFileList, zipFile);
                 ShellUtil.Cmd("rm -r " + backupPath + ".apk  " + backupPath);
-                // 关闭对话框
-                msg = new Message();
-                msg.what = MainActivity.HANDLER_CLOSEPROGRESSDIALOG;
-                handler.sendMessage(msg);
-                // 显示成功通知
-                msg = new Message();
-                msg.what = MainActivity.HANDLER_SHOWNOTIFICATION;
-                bundle.putCharSequence("ticker", "备份完成：" + appInfo.getName());
-                bundle.putCharSequence("title", "备份完成");
-                bundle.putInt("flags", Notification.FLAG_ONLY_ALERT_ONCE);
-                msg.setData(bundle);
-                handler.sendMessage(msg);
+
+                //创建xml
+                File xmlFile = new File(backupPath + ".xml");
+                FileOutputStream outStream = new FileOutputStream(xmlFile);
+                OutputStreamWriter outStreamWriter = new OutputStreamWriter(
+                        outStream, "UTF-8");
+                BufferedWriter writer = new BufferedWriter(outStreamWriter);
+                XmlUtil.writeAppCfg(writer, appInfo);
+                writer.flush();
+                writer.close();
             }
             catch (IOException e)
             {
 
             }
+            // 关闭对话框
+            msg = new Message();
+            msg.what = MainActivity.HANDLER_CLOSEPROGRESSDIALOG;
+            handler.sendMessage(msg);
+            // 显示成功通知
+            msg = new Message();
+            msg.what = MainActivity.HANDLER_SHOWNOTIFICATION;
+            bundle.putCharSequence("ticker", "备份完成：" + appInfo.getName());
+            bundle.putCharSequence("title", "备份完成");
+            bundle.putInt("flags", Notification.FLAG_ONLY_ALERT_ONCE);
+            msg.setData(bundle);
+            handler.sendMessage(msg);
         }
     }
 }

@@ -62,7 +62,7 @@ public final class R {
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int app_dialog=0x7f030001;
-        public static final int appitem=0x7f030002;
+        public static final int app_info=0x7f030002;
         public static final int contact=0x7f030003;
         public static final int fragment=0x7f030004;
         public static final int homepage=0x7f030005;
