@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import com.Cissoid.simplebackup.MainActivity;
 import com.wxhcn.simplebackup.R;
 
 /**
@@ -31,7 +32,7 @@ public class AppFragment extends ListFragment
             Bundle savedInstanceState)
     {
         setHasOptionsMenu(true);
-        applist = new Applist(getActivity());
+        applist = new Applist((MainActivity) getActivity());
         appAdapter = new AppAdapter(this, applist);
         setListAdapter(appAdapter);
         return inflater.inflate(R.layout.fragment, container, false);

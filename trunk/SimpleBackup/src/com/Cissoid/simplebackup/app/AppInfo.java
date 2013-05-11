@@ -1,6 +1,15 @@
 package com.Cissoid.simplebackup.app;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.os.Handler;
+import android.widget.Toast;
+
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.SimpleBackupApplication;
+import com.Cissoid.simplebackup.util.CopyUtil;
 
 /**
  * @author Wxh
@@ -8,10 +17,22 @@ import android.graphics.drawable.Drawable;
  */
 public class AppInfo
 {
-    public static final int TYPE_LOCAL = 1;
-    public static final int TYPE_SDCARD = 2;
+    public static final int TYPE_LOCALSDCARD = 0x0;
+    public static final int TYPE_LOCAL = 0x1;
+    public static final int TYPE_SDCARD = 0x10;
+    public static final int MODE_APPDATA = 0x0;
+    public static final int MODE_APPONLY = 0x1;
+    public static final int MODE_DATAONLY = 0x10;
     private int id;
-    private int type;
+    private AppInfo backupAppInfo = null;
+    /**
+     * 是SD卡上的备份还是已安装程序
+     */
+    public int type = TYPE_LOCAL;
+    /**
+     * 备份模式
+     */
+    public int mode = MODE_APPDATA;
     /**
      * 应用名称
      */
@@ -40,7 +61,43 @@ public class AppInfo
     /**
      * 备份时间
      */
-    private String backupTime = "无备份";
+    private String backupTime = null;
+
+    private MainActivity activity;
+
+    public AppInfo( MainActivity activity )
+    {
+        this.activity = activity;
+    }
+
+    public void backup()
+    {
+        SimpleBackupApplication application = (SimpleBackupApplication) activity
+                .getApplication();
+        final Handler handler = activity.getHandler();
+        application.getExecutorService().submit(new AppThread(handler, this));
+    }
+
+    public void restore()
+    {
+        // 应用安装目录
+        String originalAppPath = this.getAppPath();
+        // 应用数据目录
+        String originalDataPath = this.getDataPath();
+        // 备份目录
+        String backupPath = Environment.getExternalStorageDirectory()
+                + "/SimpleBackup/" + this.getPackageName();
+        if ( CopyUtil.copyFile(backupPath + ".apk", originalAppPath)
+                && CopyUtil.copyWithRoot(backupPath, originalDataPath) )
+            Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show();
+    }
+
+    public void uninstall()
+    {
+        Uri uri = Uri.fromParts("package", this.getPackageName(), null);
+        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+        activity.startActivity(intent);
+    }
 
     /**
      * @return the id
@@ -196,19 +253,21 @@ public class AppInfo
     }
 
     /**
-     * @return the type
+     * @return the backupAppInfo
      */
-    public int getType()
+    public AppInfo getBackupAppInfo()
     {
-        return type;
+        return backupAppInfo;
     }
 
     /**
-     * @param type the type to set
+     * @param backupAppInfo
+     *            the backupAppInfo to set
      */
-    public void setType( int type )
+    public void setBackupAppInfo( AppInfo backupAppInfo )
     {
-        this.type = type;
+        this.backupAppInfo = backupAppInfo;
+        type = TYPE_LOCALSDCARD;
+        mode = backupAppInfo.mode;
     }
-
 }
