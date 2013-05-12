@@ -1,5 +1,6 @@
 package com.Cissoid.simplebackup;
 
+import java.io.File;
 import java.lang.reflect.Field;
 
 import android.app.Notification;
@@ -10,16 +11,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.ViewConfiguration;
 
+import com.Cissoid.simplebackup.app.AppFragment;
 import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
@@ -31,14 +35,16 @@ import com.wxhcn.simplebackup.R;
  */
 public class MainActivity extends FragmentActivity
 {
-    public static final int STATUS_OK = 0x0;
-    public static final int STATUS_NO_ROOT = 0x1;
-    public static final int STATUS_NO_BUSYBOX = 0x10;
-    public static final int STATUS_NO_SDCARD = 0x100;
+    public static final int STATUS_OK = 0;
+    public static final int STATUS_NO_ROOT = 1;
+    public static final int STATUS_NO_BUSYBOX = 2;
+    public static final int STATUS_NO_SDCARD = 3;
 
-    public static final int HANDLER_CLOSEPROGRESSDIALOG = 0x0;
-    public static final int HANDLER_SHOWPROGRESSDIALOG = 0x1;
-    public static final int HANDLER_SHOWNOTIFICATION = 0x10;
+    public static final int HANDLER_INVALIDATE = 0;
+    public static final int HANDLER_CLOSEPROGRESSDIALOG = 1;
+    public static final int HANDLER_SHOWPROGRESSDIALOG = 2;
+    public static final int HANDLER_SHOWNOTIFICATION = 3;
+    public static final int HANDLER_INSTALL = 4;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -53,12 +59,20 @@ public class MainActivity extends FragmentActivity
     private AppService appService;
     private ProgressDialog progressDialog = null;
 
+    private AppFragment appFragment = null;
+
     public Handler handler = new Handler()
     {
         public void handleMessage( Message msg )
         {
             switch ( msg.what )
             {
+            case HANDLER_INVALIDATE :
+            {
+                if ( appFragment != null )
+                    appFragment.refresh();
+                break;
+            }
             case HANDLER_SHOWPROGRESSDIALOG :
             {
                 Bundle bundle = msg.getData();
@@ -81,6 +95,16 @@ public class MainActivity extends FragmentActivity
                 CharSequence contentText = bundle.getCharSequence("text");
                 int flags = bundle.getInt("flags");
                 showNotification(id, ticker, contentTitle, contentText, flags);
+                break;
+            }
+            case HANDLER_INSTALL :
+            {
+                Bundle bundle = msg.getData();
+                String path = bundle.getString("path");
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(new File(path)),
+                        "application/vnd.android.package-archive");
+                startActivity(intent);
                 break;
             }
             }
@@ -180,7 +204,7 @@ public class MainActivity extends FragmentActivity
     /**
      * 启动时检查各项设置
      * 
-     * @return 设置情况
+     * @return 检查结果
      */
     private int init()
     {
@@ -199,9 +223,12 @@ public class MainActivity extends FragmentActivity
     }
 
     /**
-     * 显示提示框
+     * 显示进度框
      * 
-     * @param flag
+     * @param title
+     *            标题
+     * @param message
+     *            内容
      */
     public void showProgressDialog( CharSequence title , CharSequence message )
     {
@@ -213,9 +240,11 @@ public class MainActivity extends FragmentActivity
             progressDialog.setMessage(message);
             progressDialog.show();
         }
-
     }
 
+    /**
+     * 关闭已打开的进度框
+     */
     public void closeProgressDialog()
     {
         if ( progressDialog != null )
@@ -225,6 +254,20 @@ public class MainActivity extends FragmentActivity
         }
     }
 
+    /**
+     * 显示一条通知
+     * 
+     * @param id
+     *            该通知的标示符
+     * @param ticker
+     *            状态栏显示消息
+     * @param contentTitle
+     *            通知栏标题
+     * @param contentText
+     *            通知栏内容
+     * @param flags
+     *            是否可被清除
+     */
     public void showNotification( final int id , final CharSequence ticker ,
             final CharSequence contentTitle , final CharSequence contentText ,
             final int flags )
@@ -244,5 +287,14 @@ public class MainActivity extends FragmentActivity
                 .setContentIntent(pendingIntent).build();
         notification.flags = flags;
         notificationManager.notify(id, notification);
+    }
+
+    /**
+     * @param fragment
+     *            the appFragment to set
+     */
+    public void setAppFragment( Fragment fragment )
+    {
+        this.appFragment = (AppFragment) fragment;
     }
 }

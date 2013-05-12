@@ -2,8 +2,6 @@ package com.Cissoid.simplebackup.util;
 
 import java.io.InputStream;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
@@ -45,19 +43,23 @@ public class XmlUtil
                     {
                         // 程序名
                         if ( name.equalsIgnoreCase("name") )
-                            appInfo.setName(parser.nextText());
+                            appInfo.setName(EncryptionUtil.decrypt(
+                                    parser.nextText(), EncryptionUtil.BASE64));
                         // 包名
                         else if ( name.equalsIgnoreCase("package") )
-                            appInfo.setPackageName(parser.nextText());
+                            appInfo.setPackageName(EncryptionUtil.decrypt(
+                                    parser.nextText(), EncryptionUtil.BASE64));
                         // 版本
                         else if ( name.equalsIgnoreCase("version") )
-                            appInfo.setVersion(parser.nextText());
+                            appInfo.setVersion(EncryptionUtil.decrypt(
+                                    parser.nextText(), EncryptionUtil.BASE64));
                         // 版本号
                         else if ( name.equalsIgnoreCase("versioncode") )
                             appInfo.setVersionCode(parser.next());
                         // 备份时间
                         else if ( name.equalsIgnoreCase("backuptime") )
-                            appInfo.setBackupTime(parser.nextText());
+                            appInfo.setBackupTime(EncryptionUtil.decrypt(
+                                    parser.nextText(), EncryptionUtil.BASE64));
                         // 备份模式
                         else if ( name.equalsIgnoreCase("mode") )
                             appInfo.mode = parser.next();
@@ -79,7 +81,7 @@ public class XmlUtil
         return null;
     }
 
-    public static String writeAppCfg( Writer writer , AppInfo... appInfos )
+    public static void writeAppCfg( Writer writer , AppInfo... appInfos )
     {
         XmlSerializer serializer = Xml.newSerializer();
         try
@@ -92,41 +94,39 @@ public class XmlUtil
                 serializer.startTag(null, "app");
                 // 程序名
                 serializer.startTag(null, "name");
-                serializer.text(appInfo.getName());
+                serializer.text(EncryptionUtil.encrypt(appInfo.getName(),
+                        EncryptionUtil.BASE64));
                 serializer.endTag(null, "name");
                 // 包名
                 serializer.startTag(null, "package");
-                serializer.text(appInfo.getPackageName());
+                serializer.text(EncryptionUtil.encrypt(
+                        appInfo.getPackageName(), EncryptionUtil.BASE64));
                 serializer.endTag(null, "package");
                 // 版本
                 serializer.startTag(null, "version");
-                serializer.text(appInfo.getVersion());
+                serializer.text(EncryptionUtil.encrypt(appInfo.getVersion(),
+                        EncryptionUtil.BASE64));
                 serializer.endTag(null, "version");
                 // 版本号versionCode
                 serializer.startTag(null, "versioncode");
                 serializer.text(String.valueOf(appInfo.getVersionCode()));
                 serializer.endTag(null, "versioncode");
                 // 备份时间
-                SimpleDateFormat formatter = new SimpleDateFormat(
-                        "yyyy年MM月dd日  HH:mm:ss");
-                Date curDate = new Date(System.currentTimeMillis());
-                String time = formatter.format(curDate);
+
                 serializer.startTag(null, "backuptime");
-                serializer.text(time);
+                serializer.text(EncryptionUtil.encrypt(appInfo.getBackupTime(),
+                        EncryptionUtil.BASE64));
                 serializer.endTag(null, "backuptime");
                 // 备份模式
                 serializer.startTag(null, "mode");
-                serializer.text(appInfo.getPackageName());
+                serializer.text(String.valueOf(appInfo.mode));
                 serializer.endTag(null, "mode");
                 serializer.endTag(null, "app");
             }
-            serializer.endDocument();
-            return writer.toString();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        return null;
     }
 }

@@ -2,22 +2,13 @@ package com.Cissoid.simplebackup.app;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.SimpleBackupApplication;
-import com.Cissoid.simplebackup.util.CopyUtil;
-import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
 /**

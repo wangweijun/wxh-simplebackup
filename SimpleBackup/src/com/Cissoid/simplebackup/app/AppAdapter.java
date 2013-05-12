@@ -1,6 +1,7 @@
 package com.Cissoid.simplebackup.app;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ public class AppAdapter extends BaseAdapter
      * @param applist
      *            App列表
      */
-    public AppAdapter(Fragment fragment, Applist applist)
+    public AppAdapter( Fragment fragment , Applist applist )
     {
         // this.listView = listView;
         this.fragment = fragment;
@@ -42,26 +43,26 @@ public class AppAdapter extends BaseAdapter
     }
 
     @Override
-    public Object getItem(int position)
+    public Object getItem( int position )
     {
         // TODO Auto-generated method stub
         return applist.getItem(position);
     }
 
     @Override
-    public long getItemId(int position)
+    public long getItemId( int position )
     {
         // TODO Auto-generated method stub
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView( int position , View convertView , ViewGroup parent )
     {
         // TODO Auto-generated method stub
         View view = null;
         // 利用convertView提高效率
-        if (convertView != null)
+        if ( convertView != null )
         {
             view = convertView;
         }
@@ -74,15 +75,15 @@ public class AppAdapter extends BaseAdapter
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(R.layout.app_info, null);
         view.setClickable(true);
-
+        appItem.setView(view);
         // 单击应用条目，显示详情
         view.setOnClickListener(new OnClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onClick( View v )
             {
-                AppInfoDialog appInfoDialog = AppInfoDialog
-                        .newInstance(fragment.getActivity(),appItem);
+                AppInfoDialog appInfoDialog = AppInfoDialog.newInstance(
+                        fragment.getActivity(), appItem);
                 appInfoDialog.show(fragment.getFragmentManager(), "info");
             }
         });
@@ -93,15 +94,24 @@ public class AppAdapter extends BaseAdapter
         TextView backupTime = (TextView) view
                 .findViewById(R.id.app_backup_time);
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.app_check);
-        if (appName != null)
+        if ( appName != null )
             appName.setText(appItem.getName());
-        if (appVersion != null)
+        if ( appVersion != null )
             appVersion.setText(appItem.getVersion());
-        if (appIcon != null)
+        if ( appIcon != null )
             appIcon.setImageDrawable(appItem.getIcon());
-        if (backupTime != null)
+        if ( !appItem.getBackupTime().equalsIgnoreCase("无备份") )
+        {
             backupTime.setText(appItem.getBackupTime());
-        if (checkBox != null && applist.isMultiSelect() == true)
+            backupTime.setTextColor(Color.rgb(0, 255, 0));
+        }
+        else
+        {
+            backupTime.setText(appItem.getBackupTime());
+            backupTime.setTextColor(Color.rgb(255, 0, 0));
+        }
+
+        if ( checkBox != null && applist.isMultiSelect() == true )
         {
             checkBox.setVisibility(View.VISIBLE);
             checkBox.setChecked(flag);
@@ -114,7 +124,7 @@ public class AppAdapter extends BaseAdapter
         return view;
     }
 
-    public void setSelectAll(boolean flag)
+    public void setSelectAll( boolean flag )
     {
         this.flag = flag;
     }
