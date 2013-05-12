@@ -79,17 +79,18 @@ public class Applist
             }
         }
         // 获取SD卡上的备份
-        FileInputStream inStream;
+        FileInputStream fileInputStream;
         File file;
         ArrayList<String> paths = GetXmls();
         if ( paths != null )
+        {
             try
             {
                 for ( String path : paths )
                 {
                     file = new File(path);
-                    inStream = new FileInputStream(file);
-                    appInfo = XmlUtil.readAppCfg(inStream, activity);
+                    fileInputStream = new FileInputStream(file);
+                    appInfo = XmlUtil.readAppCfg(fileInputStream, activity);
                     boolean flag = false;
                     for ( AppInfo a : appInfos )
                     {
@@ -112,6 +113,11 @@ public class Applist
             {
 
             }
+            catch (NullPointerException e)
+            {
+
+            }
+        }
 
         // 排序
         Collections.sort(appInfos, new SortByName());

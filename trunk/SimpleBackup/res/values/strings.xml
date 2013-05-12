@@ -13,5 +13,6 @@
     <string name="app_dialog_backup">Backup</string>
     <string name="app_dialog_restore">Restore</string>
     <string name="app_dialog_uninstall">Uninstall</string>
+    <string name="app_dialog_delete">Delete Backup</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import com.Cissoid.simplebackup.MainActivity;
@@ -24,7 +25,6 @@ public class AppInfo
     public static final int MODE_APPONLY = 0x1;
     public static final int MODE_DATAONLY = 0x10;
     private int id;
-    private AppInfo backupAppInfo = null;
     /**
      * 是SD卡上的备份还是已安装程序
      */
@@ -61,9 +61,10 @@ public class AppInfo
     /**
      * 备份时间
      */
-    private String backupTime = null;
+    private String backupTime = "无备份";
 
     private MainActivity activity;
+    private View view = null;
 
     public AppInfo( MainActivity activity )
     {
@@ -75,21 +76,19 @@ public class AppInfo
         SimpleBackupApplication application = (SimpleBackupApplication) activity
                 .getApplication();
         final Handler handler = activity.getHandler();
-        application.getExecutorService().submit(new AppThread(handler, this));
+        AppThread thread = new AppThread(activity, this);
+        thread.mode = AppThread.MODE_BACKUP;
+        application.getExecutorService().submit(thread);
     }
 
     public void restore()
     {
-        // 应用安装目录
-        String originalAppPath = this.getAppPath();
-        // 应用数据目录
-        String originalDataPath = this.getDataPath();
-        // 备份目录
-        String backupPath = Environment.getExternalStorageDirectory()
-                + "/SimpleBackup/" + this.getPackageName();
-        if ( CopyUtil.copyFile(backupPath + ".apk", originalAppPath)
-                && CopyUtil.copyWithRoot(backupPath, originalDataPath) )
-            Toast.makeText(activity, "success", Toast.LENGTH_SHORT).show();
+        SimpleBackupApplication application = (SimpleBackupApplication) activity
+                .getApplication();
+        final Handler handler = activity.getHandler();
+        AppThread thread = new AppThread(activity, this);
+        thread.mode = AppThread.MODE_RESTORE;
+        application.getExecutorService().submit(thread);
     }
 
     public void uninstall()
@@ -253,21 +252,30 @@ public class AppInfo
     }
 
     /**
-     * @return the backupAppInfo
-     */
-    public AppInfo getBackupAppInfo()
-    {
-        return backupAppInfo;
-    }
-
-    /**
      * @param backupAppInfo
      *            the backupAppInfo to set
      */
     public void setBackupAppInfo( AppInfo backupAppInfo )
     {
-        this.backupAppInfo = backupAppInfo;
+        this.backupTime = backupAppInfo.getBackupTime();
         type = TYPE_LOCALSDCARD;
         mode = backupAppInfo.mode;
+    }
+
+    /**
+     * @return the view
+     */
+    public View getView()
+    {
+        return view;
+    }
+
+    /**
+     * @param view
+     *            the view to set
+     */
+    public void setView( View view )
+    {
+        this.view = view;
     }
 }
