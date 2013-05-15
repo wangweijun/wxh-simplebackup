@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">简单备份</string>
+    <string name="action_settings">设置</string>
+    <string name="title_home">首页</string>
+    <string name="title_app">应用</string>
+    <string name="title_sms">短信</string>
+    <string name="sms_list_no_message">无短信</string>
+    <string name="menu_add">Add</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_accept">Accept</string>
+    <string name="app_dialog_button_backup_all">全部</string>
+    <string name="app_dialog_button_restore">恢复</string>
+    <string name="app_dialog_button_uninstall">卸载</string>
+    <string name="app_dialog_button_delete">删除备份</string>
+    <string name="main_dialog_checking_status">Checking...</string>
+    <string name="main_dialog_checking_root">Checking ROOT...</string>
+    <string name="main_dialog_checking_busybox">Checking Busybox...</string>
+    <string name="main_dialog_checking_sdcard">正在检查SD卡...</string>
+    <string name="app_dialog_button_backup_app">应用</string>
+    <string name="app_dialog_button_backup_data">数据</string>
+    <string name="app_dialog_backup_bar">备份</string>
+    <string name="app_list_backup_time">备份时间</string>
+    <string name="app_list_backup_time_empty">无备份</string>
+
+</resources>

@@ -94,6 +94,7 @@ public class Applist
                     boolean flag = false;
                     for ( AppInfo a : appInfos )
                     {
+                        // 若已安装
                         if ( a.getPackageName().equalsIgnoreCase(
                                 appInfo.getPackageName()) )
                         {
@@ -102,6 +103,7 @@ public class Applist
                             break;
                         }
                     }
+                    // 若未安装
                     if ( flag == false )
                     {
                         appInfo.type = AppInfo.TYPE_SDCARD;
@@ -139,7 +141,7 @@ public class Applist
         }
     }
 
-    public ArrayList<String> GetXmls() // 搜索目录，扩展名，是否进入子文件夹
+    public ArrayList<String> GetXmls()
     {
         ArrayList<String> paths = new ArrayList<String>();
         File[] files = new File(Environment.getExternalStorageDirectory()

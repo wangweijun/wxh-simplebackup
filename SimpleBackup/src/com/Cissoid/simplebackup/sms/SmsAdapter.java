@@ -1,103 +1,154 @@
 package com.Cissoid.simplebackup.sms;
 
-import java.util.ArrayList;
-
+import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.util.Log;
+import android.content.DialogInterface;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.Cissoid.simplebackup.util.DBUtil;
+import com.Cissoid.simplebackup.MainActivity;
 import com.wxhcn.simplebackup.R;
 
-public class SmsAdapter extends BaseAdapter {
-    private static final Uri   URI       = Uri.parse("content://sms");
-    private Context            context;
-    private ArrayList<SmsInfo> arrayList = new ArrayList<SmsInfo>();
+public class SmsAdapter extends BaseAdapter
+{
 
-    public SmsAdapter(Context context) {
-        this.context = context;
-        arrayList = getData();
+    private Fragment fragment;
+    private Smslist smslist;
+    private boolean flag;
+
+    public SmsAdapter( Fragment fragment , Smslist smslist )
+    {
+        this.fragment = fragment;
+        this.smslist = smslist;
     }
 
     @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return arrayList.size();
+    public int getCount()
+    {
+        return smslist.getCount();
     }
 
     @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return arrayList.get(position);
+    public Object getItem( int position )
+    {
+        return smslist.getItem(position);
     }
 
     @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
+    public long getItemId( int position )
+    {
         return position;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView( final int position , View convertView ,
+            ViewGroup parent )
+    {
         // TODO Auto-generated method stub
-        View view = convertView;
-        if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.smsitem, null);
-            view.setClickable(true);
-            view.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-                    // TODO Auto-generated method stub
-                    Toast.makeText(context,
-                            arrayList.get(position).getAddress(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+        View view = null;
+        // 利用convertView提高效率
+        if ( convertView != null )
+        {
+            view = convertView;
         }
-        final SmsInfo smsInfo = arrayList.get(position);
-        if (smsInfo == null)
+        else
+        {
+            view = new View(fragment.getActivity());
+        }
+        final ThreadInfo threadInfo = smslist.getItem(position);
+        LayoutInflater layoutInflater = (LayoutInflater) fragment.getActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = layoutInflater.inflate(R.layout.sms_info, null);
+        view.setClickable(true);
+        if ( threadInfo == null )
             return view;
+        view.setOnClickListener(new OnClickListener()
+        {
+
+            @Override
+            public void onClick( View v )
+            {
+                Builder builder = new Builder(fragment.getActivity());
+                builder.setMessage(R.string.sms_alert_message)
+                        .setPositiveButton(R.string.sms_alert_backup,
+                                new DialogInterface.OnClickListener()
+                                {
+
+                                    @Override
+                                    public void onClick(
+                                            DialogInterface dialog , int which )
+                                    {
+                                        // TODO Auto-generated method stub
+                                        new SmsBackupTask(
+                                                (MainActivity) fragment
+                                                        .getActivity())
+                                                .execute(threadInfo);
+                                    }
+                                })
+                        .setNegativeButton(R.string.sms_alert_restore,
+                                new DialogInterface.OnClickListener()
+                                {
+
+                                    @Override
+                                    public void onClick(
+                                            DialogInterface dialog , int which )
+                                    {
+                                        // TODO Auto-generated method stub
+                                        new SmsRestoreTask(
+                                                (MainActivity) fragment
+                                                        .getActivity())
+                                                .execute(threadInfo);
+                                    }
+                                }).show();
+            }
+        });
+        TextView person = (TextView) view.findViewById(R.id.sms_person);
         TextView address = (TextView) view.findViewById(R.id.sms_address);
-        if (address != null)
-            address.setText("(" + smsInfo.getAddress() + ")");
         TextView count = (TextView) view.findViewById(R.id.sms_count);
-        if (count != null)
-            count.setText(smsInfo.getNumber() + "条");
+        TextView snippet = (TextView) view.findViewById(R.id.sms_snippet);
+        TextView backupInfo = (TextView) view
+                .findViewById(R.id.sms_backup_info);
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.sms_check);
+        if ( threadInfo.getPerson().length() == 0 )
+        {
+            if ( address != null )
+                address.setText(threadInfo.getAddress());
+        }
+        else
+        {
+            if ( person != null )
+                person.setText(threadInfo.getPerson());
+            if ( address != null )
+                address.setText("(" + threadInfo.getAddress() + ")");
+        }
+        if ( count != null )
+            count.setText(threadInfo.getNumber() + "条");
+        if ( snippet != null )
+            snippet.setText(threadInfo.getSnippet());
+        if ( backupInfo != null )
+            backupInfo.setText("test");
+        if ( checkBox != null && smslist.isMultiSelect() == true )
+        {
+            checkBox.setVisibility(View.VISIBLE);
+            checkBox.setChecked(flag);
+        }
+        else
+        {
+            checkBox.setChecked(false);
+            checkBox.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
-    public ArrayList<SmsInfo> getData() {
-        ArrayList<SmsInfo> arrayList = new ArrayList<SmsInfo>();
-        Log.v("test", "开始查询");
-        String[] projection = new String[] { "distinct " + SmsField.THREAD_ID,
-                SmsField.ADDRESS,
-                "COUNT(" + SmsField.THREAD_ID + ") AS 'count'" };
-        Cursor cursor = DBUtil.query(context, URI, projection,
-                SmsField.THREAD_ID);
-        int thread_id = cursor.getColumnIndex(SmsField.THREAD_ID);
-        int address = cursor.getColumnIndex(SmsField.ADDRESS);
-        int count = cursor.getColumnIndex("count");
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                SmsInfo smsinfo = new SmsInfo();
-                smsinfo.setPerson(cursor.getString(thread_id));
-                smsinfo.setAddress(cursor.getString(address));
-                smsinfo.setNumber(cursor.getInt(count));
-                arrayList.add(smsinfo);
-            }
-            cursor.close();
-        }
-        return arrayList;
+    public void setSelectAll( boolean flag )
+    {
+        this.flag = flag;
+
     }
 }
