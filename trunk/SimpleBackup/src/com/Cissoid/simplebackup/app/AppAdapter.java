@@ -91,8 +91,8 @@ public class AppAdapter extends BaseAdapter
         ImageView appIcon = (ImageView) view.findViewById(R.id.app_icon);
         TextView appName = (TextView) view.findViewById(R.id.app_name);
         TextView appVersion = (TextView) view.findViewById(R.id.app_version);
-        TextView backupTime = (TextView) view
-                .findViewById(R.id.app_backup_time);
+        TextView backupInfo = (TextView) view
+                .findViewById(R.id.app_backup_info);
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.app_check);
         if ( appName != null )
             appName.setText(appItem.getName());
@@ -100,15 +100,18 @@ public class AppAdapter extends BaseAdapter
             appVersion.setText(appItem.getVersion());
         if ( appIcon != null )
             appIcon.setImageDrawable(appItem.getIcon());
-        if ( !appItem.getBackupTime().equalsIgnoreCase("ÎÞ±¸·Ý") )
+        backupInfo.setText(appItem.getBackupInfo());
+        switch ( appItem.type )
         {
-            backupTime.setText(appItem.getBackupTime());
-            backupTime.setTextColor(Color.rgb(0, 255, 0));
-        }
-        else
-        {
-            backupTime.setText(appItem.getBackupTime());
-            backupTime.setTextColor(Color.rgb(255, 0, 0));
+        case AppInfo.TYPE_LOCAL :
+            backupInfo.setTextColor(Color.rgb(255, 68, 68));
+            break;
+        case AppInfo.TYPE_LOCAL_SDCARD :
+            backupInfo.setTextColor(Color.rgb(51, 181, 229));
+            break;
+        case AppInfo.TYPE_SDCARD :
+            backupInfo.setTextColor(Color.rgb(255, 187, 51));
+            break;
         }
 
         if ( checkBox != null && applist.isMultiSelect() == true )

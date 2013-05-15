@@ -17,6 +17,8 @@ import com.Cissoid.simplebackup.MainActivity;
 import com.wxhcn.simplebackup.R;
 
 /**
+ * 应用备份对应的Fragment
+ * 
  * @author Wxh
  * 
  */
@@ -28,42 +30,45 @@ public class AppFragment extends ListFragment
     private Menu menu;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
+    public View onCreateView( LayoutInflater inflater , ViewGroup container ,
+            Bundle savedInstanceState )
     {
         setHasOptionsMenu(true);
         applist = new Applist((MainActivity) getActivity());
         appAdapter = new AppAdapter(this, applist);
         setListAdapter(appAdapter);
+        this.menu = ((MainActivity) getActivity()).getMenu();
         return inflater.inflate(R.layout.fragment, container, false);
 
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
     {
-        // TODO Auto-generated method stub
-        super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         getActivity().getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.action_multi_select).setVisible(true);
+        menu.findItem(R.id.menu_multi_select).setVisible(true);
         this.menu = menu;
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected( MenuItem item )
     {
         // TODO Auto-generated method stub
-        switch (item.getItemId())
+        switch ( item.getItemId() )
         {
-        case R.id.action_multi_select:
+        case R.id.menu_multi_select :
             applist.setMultiSelect(!applist.isMultiSelect());
             enterMultiMode();
             refresh();
             break;
-        case R.id.action_select_all:
-            selectAll();
+        case R.id.menu_select_all :
+            selectAll(true);
             break;
+        case R.id.menu_accept :
+            break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -77,16 +82,26 @@ public class AppFragment extends ListFragment
     public void refresh()
     {
         appAdapter.notifyDataSetChanged();
+        appAdapter.notifyDataSetInvalidated();
     }
 
-    public void selectAll()
+    public void refleshAll()
     {
-        for (int i = 0; i < getListView().getChildCount(); i++)
+        applist = new Applist((MainActivity) getActivity());
+        appAdapter = new AppAdapter(this, applist);
+        setListAdapter(appAdapter);
+        appAdapter.notifyDataSetChanged();
+        appAdapter.notifyDataSetInvalidated();
+    }
+
+    public void selectAll( boolean flag )
+    {
+        for ( int i = 0 ; i < getListView().getChildCount() ; i++ )
         {
             View view = (View) getListView().getChildAt(i);
-            CheckBox checkBox = (CheckBox) view.findViewById(R.id.app_check);
-            checkBox.setChecked(true);
-            appAdapter.setSelectAll(true);
+            CheckBox checkBox = (CheckBox) view.findViewById(R.id.sms_check);
+            checkBox.setChecked(flag);
+            appAdapter.setSelectAll(flag);
         }
     }
 

@@ -23,12 +23,17 @@ import com.Cissoid.simplebackup.util.CopyUtil;
 import com.Cissoid.simplebackup.util.ShellUtil;
 import com.Cissoid.simplebackup.util.XmlUtil;
 import com.Cissoid.simplebackup.util.ZipUtil;
+import com.wxhcn.simplebackup.R;
 
 public class AppThread implements Runnable
 {
-    public static final int MODE_BACKUP = 0x0;
-    public static final int MODE_RESTORE = 0x1;
-    public static final int MODE_DELETE = 0x10;
+    public static final int MODE_BACKUP_ALL = 0x0;
+    public static final int MODE_BACKUP_APP = 0x1;
+    public static final int MODE_BACKUP_DATA = 0x2;
+    public static final int MODE_RESTORE_ALL = 0x10;
+    public static final int MODE_RESTORE_APP = 0x11;
+    public static final int MODE_RESTORE_DATA = 0x12;
+    public static final int MODE_DELETE = 0x20;
     private MainActivity activity;
     private Handler handler;
     private AppInfo[] appInfos;
@@ -46,40 +51,35 @@ public class AppThread implements Runnable
     {
         switch ( mode )
         {
-        case MODE_BACKUP :
+        case MODE_BACKUP_ALL :
+        case MODE_BACKUP_APP :
+        case MODE_BACKUP_DATA :
             backup();
             break;
-        case MODE_RESTORE :
+        case MODE_RESTORE_ALL :
+        case MODE_RESTORE_APP :
+        case MODE_RESTORE_DATA :
             restore();
+            break;
+        case MODE_DELETE :
             break;
         default :
             break;
         }
     }
 
+    /**
+     * 备份
+     */
     private void backup()
     {
         for ( AppInfo appInfo : appInfos )
         {
             // 显示对话框
-            Message msg = new Message();
-            msg.what = MainActivity.HANDLER_SHOWPROGRESSDIALOG;
-            Bundle bundle = new Bundle();
-            bundle.putCharSequence("title", "正在备份...");
-            bundle.putCharSequence("text", appInfo.getName());
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+            showDialog("正在备份...", appInfo.getName());
             // 显示通知
-            msg = new Message();
-            msg.what = MainActivity.HANDLER_SHOWNOTIFICATION;
-            bundle.putInt("id", appInfo.getId());
-            bundle.putCharSequence("ticker", "正在备份：" + appInfo.getName());
-            bundle.putCharSequence("title", "正在备份");
-            bundle.putCharSequence("text", appInfo.getName());
-            bundle.putInt("flags", Notification.FLAG_NO_CLEAR);
-            msg.setData(bundle);
-            handler.sendMessage(msg);
-
+            showNotification(appInfo.getId(), "正在备份:" + appInfo.getName(),
+                    "正在备份", appInfo.getName(), Notification.FLAG_NO_CLEAR);
             // 应用安装目录
             String originalAppPath = appInfo.getAppPath();
             // 应用数据目录
@@ -88,31 +88,48 @@ public class AppThread implements Runnable
             String backupPath = Environment.getExternalStorageDirectory()
                     + "/SimpleBackup/" + appInfo.getPackageName();
             // 拷贝安装包
-            CopyUtil.copyFile(originalAppPath, backupPath + ".apk");
+            if ( mode != MODE_BACKUP_DATA )
+                CopyUtil.copyFile(originalAppPath, backupPath + ".apk");
             // 拷贝数据文件
-            String cmd = "busybox tar zcvf " + backupPath + ".tar.gz "
-                    + originalDataPath;
-            ShellUtil.RootCmd(cmd);
+            if ( mode != MODE_BACKUP_APP )
+            {
+                String cmd = "busybox tar zcvf " + backupPath + ".tar.gz "
+                        + originalDataPath;
+                ShellUtil.RootCmd(cmd);
+            }
 
             // 压缩
             ArrayList<File> resFileList = new ArrayList<File>();
-            File apk = new File(backupPath + ".apk");
-            File data = new File(backupPath + ".tar.gz");
-            if ( apk.exists() )
-                resFileList.add(apk);
-            if ( data.exists() )
-                resFileList.add(data);
+            File apk;
+            if ( mode != MODE_BACKUP_DATA )
+            {
+                apk = new File(backupPath + ".apk");
+                if ( apk.exists() )
+                    resFileList.add(apk);
+            }
+            File data;
+            if ( mode != MODE_BACKUP_APP )
+            {
+                data = new File(backupPath + ".tar.gz");
+                if ( data.exists() )
+                    resFileList.add(data);
+            }
             File zipFile = new File(backupPath + ".zip");
             try
             {
                 // 压缩文件
                 ZipUtil.zipFiles(resFileList, zipFile);
                 // 删除原始文件
-                ShellUtil.Cmd("rm -r " + backupPath + ".apk  " + backupPath
-                        + ".tar.gz");
+                String cmd = "rm -r ";
+                if ( mode != MODE_BACKUP_DATA )
+                    cmd += backupPath + ".apk ";
+                if ( mode != MODE_BACKUP_APP )
+                    cmd += backupPath + ".tar.gz";
+                ShellUtil.Cmd(cmd);
                 // 记录备份时间
                 SimpleDateFormat formatter = new SimpleDateFormat(
-                        "备份时间:yyyy.MM.dd HH:mm");
+                        activity.getString(R.string.app_list_backup_time)
+                                + ":yyyy.MM.dd HH:mm");
                 Date curDate = new Date(System.currentTimeMillis());
                 String time = formatter.format(curDate);
                 appInfo.setBackupTime(time);
@@ -131,17 +148,15 @@ public class AppThread implements Runnable
 
             }
             // 关闭对话框
-            msg = new Message();
-            msg.what = MainActivity.HANDLER_CLOSEPROGRESSDIALOG;
+            Message msg = new Message();
+            msg.what = MainActivity.HANDLER_CLOSE_PROGRESSDIALOG;
             handler.sendMessage(msg);
             // 显示成功通知
-            msg = new Message();
-            msg.what = MainActivity.HANDLER_SHOWNOTIFICATION;
-            bundle.putCharSequence("ticker", "备份完成：" + appInfo.getName());
-            bundle.putCharSequence("title", "备份完成");
-            bundle.putInt("flags", Notification.FLAG_ONLY_ALERT_ONCE);
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+            showNotification(appInfo.getId(),
+                    activity.getString(R.string.notification_backup_complete)
+                            + ":" + appInfo.getName(),
+                    activity.getString(R.string.notification_backup_complete),
+                    appInfo.getName(), Notification.FLAG_ONLY_ALERT_ONCE);
             msg = new Message();
             msg.what = MainActivity.HANDLER_INVALIDATE;
             handler.sendMessage(msg);
@@ -152,28 +167,18 @@ public class AppThread implements Runnable
         }
     }
 
+    /**
+     * 还原
+     */
     private void restore()
     {
         for ( AppInfo appInfo : appInfos )
         {
             // 显示对话框
-            Message msg = new Message();
-            msg.what = MainActivity.HANDLER_SHOWPROGRESSDIALOG;
-            Bundle bundle = new Bundle();
-            bundle.putCharSequence("title", "正在还原...");
-            bundle.putCharSequence("text", appInfo.getName());
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+            showDialog("正在还原", appInfo.getName());
             // 显示通知
-            msg = new Message();
-            msg.what = MainActivity.HANDLER_SHOWNOTIFICATION;
-            bundle.putInt("id", appInfo.getId());
-            bundle.putCharSequence("ticker", "正在还原：" + appInfo.getName());
-            bundle.putCharSequence("title", "正在还原");
-            bundle.putCharSequence("text", appInfo.getName());
-            bundle.putInt("flags", Notification.FLAG_NO_CLEAR);
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+            showNotification(appInfo.getId(), "正在还原:" + appInfo.getName(),
+                    "正在还原", appInfo.getName(), Notification.FLAG_NO_CLEAR);
 
             String restorePath = Environment.getExternalStorageDirectory()
                     + "/SimpleBackup/";
@@ -192,33 +197,74 @@ public class AppThread implements Runnable
 
             }
             // 安装apk
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(
-                    Uri.fromFile(new File(restorePath
-                            + appInfo.getPackageName() + ".apk")),
-                    "application/vnd.android.package-archive");
-            activity.startActivity(intent);
-
+            if ( mode != MODE_RESTORE_DATA )
+            {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(
+                        Uri.fromFile(new File(restorePath
+                                + appInfo.getPackageName() + ".apk")),
+                        "application/vnd.android.package-archive");
+                activity.startActivity(intent);
+            }
             // 还原数据
-            String cmd = "busybox tar zxvf " + restorePath + appInfo.getPackageName()
-                    + ".tar.gz";
-            ShellUtil.RootCmd(cmd);
-
+            if ( mode != MODE_RESTORE_APP )
+            {
+                String cmd = "busybox tar zxvf " + restorePath
+                        + appInfo.getPackageName() + ".tar.gz";
+                ShellUtil.RootCmd(cmd);
+            }
             // 关闭对话框
-            msg = new Message();
-            msg.what = MainActivity.HANDLER_CLOSEPROGRESSDIALOG;
+            Message msg = new Message();
+            msg.what = MainActivity.HANDLER_CLOSE_PROGRESSDIALOG;
             handler.sendMessage(msg);
             // 显示成功通知
-            msg = new Message();
-            msg.what = MainActivity.HANDLER_SHOWNOTIFICATION;
-            bundle.putCharSequence("ticker", "还原完成：" + appInfo.getName());
-            bundle.putCharSequence("title", "还原完成");
-            bundle.putInt("flags", Notification.FLAG_ONLY_ALERT_ONCE);
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+            showNotification(appInfo.getId(), "还原完成:" + appInfo.getName(),
+                    "还原完成", appInfo.getName(),
+                    Notification.FLAG_ONLY_ALERT_ONCE);
             msg = new Message();
             msg.what = MainActivity.HANDLER_INVALIDATE;
             handler.sendMessage(msg);
         }
+    }
+
+    /**
+     * 显示对话框
+     * 
+     * @param title
+     * @param text
+     */
+    private void showDialog( String title , String text )
+    {
+        Message msg = new Message();
+        msg.what = MainActivity.HANDLER_SHOW_PROGRESSDIALOG;
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("message", text);
+        msg.setData(bundle);
+        handler.sendMessage(msg);
+    }
+
+    /**
+     * 显示通知
+     * 
+     * @param id
+     * @param ticker
+     * @param title
+     * @param text
+     * @param flag
+     */
+    private void showNotification( int id , String ticker , String title ,
+            String text , int flag )
+    {
+        Message msg = new Message();
+        msg.what = MainActivity.HANDLER_SHOW_NOTIFICATION;
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", id);
+        bundle.putString("ticker", ticker);
+        bundle.putString("title", title);
+        bundle.putString("text", text);
+        bundle.putInt("flags", flag);
+        msg.setData(bundle);
+        handler.sendMessage(msg);
     }
 }

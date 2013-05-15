@@ -3,7 +3,6 @@ package com.Cissoid.simplebackup;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.app.AlertDialog;
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -27,6 +26,37 @@ public class SimpleBackupApplication extends Application
      */
     private boolean hasBusybox = false;
 
+    private boolean hasSDCard = false;
+
+    public void showNotification( final int icon , final CharSequence ticker ,
+            final CharSequence contentTitle , final CharSequence contentText )
+    {
+        // 添加状态栏通知
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                intent, 0);
+        Notification notification = new Builder(this).setTicker(ticker)
+                .setContentTitle(contentTitle).setContentText(contentText)
+                .setSmallIcon(icon).setWhen(System.currentTimeMillis())
+                .setContentIntent(pendingIntent).build();
+        notification.flags = Notification.FLAG_NO_CLEAR;
+        notificationManager.notify(1, notification);
+    }
+
+    // 以下为需要用到的getter，setter
+
+    /**
+     * @return the executorService
+     */
+    public ExecutorService getExecutorService()
+    {
+        return executorService;
+    }
+
     /**
      * @return the hasRoot
      */
@@ -46,29 +76,41 @@ public class SimpleBackupApplication extends Application
     }
 
     /**
-     * @return the executorService
+     * @return the hasBusybox
      */
-    public ExecutorService getExecutorService()
+    public boolean hasBusybox()
     {
-        return executorService;
+        return hasBusybox;
     }
 
-    public void showNotification( final int icon , final CharSequence ticker ,
-            final CharSequence contentTitle , final CharSequence contentText )
+    /**
+     * @param hasBusybox
+     *            the hasBusybox to set
+     */
+    public void setBusybox( boolean hasBusybox )
     {
-        // 添加状态栏通知
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                intent, 0);
-        Notification notification = new Builder(this).setTicker(ticker)
-                .setContentTitle(contentTitle).setContentText(contentText)
-                .setSmallIcon(icon).setWhen(System.currentTimeMillis())
-                .setContentIntent(pendingIntent).build();
-        notification.flags = Notification.FLAG_NO_CLEAR;
-        notificationManager.notify(1, notification);
+        this.hasBusybox = hasBusybox;
+    }
+
+    /**
+     * @return the hasSDCard
+     */
+    public boolean hasSDCard()
+    {
+        return hasSDCard;
+    }
+
+    /**
+     * @param hasSDCard
+     *            the hasSDCard to set
+     */
+    public void setSDCard( boolean hasSDCard )
+    {
+        this.hasSDCard = hasSDCard;
+    }
+
+    public boolean canBackupData()
+    {
+        return hasRoot && hasBusybox;
     }
 }

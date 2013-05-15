@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.Cissoid.simplebackup.SimpleBackupApplication;
 import com.wxhcn.simplebackup.R;
 
 /**
@@ -51,29 +52,67 @@ public class AppInfoDialog extends DialogFragment
         dialog.setTitle(appInfo.getName());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.app_dialog, null);
-        Button backupButton = (Button) view
-                .findViewById(R.id.app_dialog_backup);
+        Button backupAllButton = (Button) view
+                .findViewById(R.id.app_dialog_backup_all);
+        Button backupAppButton = (Button) view
+                .findViewById(R.id.app_dialog_backup_app);
+        Button backupDataButton = (Button) view
+                .findViewById(R.id.app_dialog_backup_data);
         Button restoreButton = (Button) view
                 .findViewById(R.id.app_dialog_restore);
         Button uninstallButton = (Button) view
                 .findViewById(R.id.app_dialog_uninstall);
-        backupButton.setOnClickListener(new OnClickListener()
+        if ( ((SimpleBackupApplication) appInfo.getActivity().getApplication())
+                .canBackupData() )
+        {
+            backupAllButton.setOnClickListener(new OnClickListener()
+            {
+
+                @Override
+                public void onClick( View v )
+                {
+                    appInfo.mode = AppInfo.MODE_APP_DATA;
+                    appInfo.backup(AppThread.MODE_BACKUP_ALL);
+                    dismiss();
+                }
+            });
+            backupDataButton.setOnClickListener(new OnClickListener()
+            {
+
+                @Override
+                public void onClick( View v )
+                {
+                    appInfo.mode = AppInfo.MODE_DATA_ONLY;
+                    appInfo.backup(AppThread.MODE_BACKUP_DATA);
+                    dismiss();
+                }
+            });
+        }
+        else
+        {
+            backupAllButton.setClickable(false);
+            backupDataButton.setClickable(false);
+        }
+
+        backupAppButton.setOnClickListener(new OnClickListener()
         {
 
             @Override
             public void onClick( View v )
             {
-                appInfo.backup();
+                appInfo.mode = AppInfo.MODE_APP_ONLY;
+                appInfo.backup(AppThread.MODE_BACKUP_APP);
                 dismiss();
             }
         });
+
         restoreButton.setOnClickListener(new OnClickListener()
         {
 
             @Override
             public void onClick( View v )
             {
-                appInfo.restore();
+                appInfo.restore(AppThread.MODE_RESTORE_ALL);
                 dismiss();
             }
         });

@@ -7,14 +7,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +21,6 @@ import android.view.Menu;
 import android.view.ViewConfiguration;
 
 import com.Cissoid.simplebackup.app.AppFragment;
-import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
 /**
@@ -41,9 +37,9 @@ public class MainActivity extends FragmentActivity
     public static final int STATUS_NO_SDCARD = 3;
 
     public static final int HANDLER_INVALIDATE = 0;
-    public static final int HANDLER_CLOSEPROGRESSDIALOG = 1;
-    public static final int HANDLER_SHOWPROGRESSDIALOG = 2;
-    public static final int HANDLER_SHOWNOTIFICATION = 3;
+    public static final int HANDLER_CLOSE_PROGRESSDIALOG = 1;
+    public static final int HANDLER_SHOW_PROGRESSDIALOG = 2;
+    public static final int HANDLER_SHOW_NOTIFICATION = 3;
     public static final int HANDLER_INSTALL = 4;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -56,7 +52,6 @@ public class MainActivity extends FragmentActivity
     private SectionPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private Menu menu;
-    private AppService appService;
     private ProgressDialog progressDialog = null;
 
     private AppFragment appFragment = null;
@@ -67,36 +62,41 @@ public class MainActivity extends FragmentActivity
         {
             switch ( msg.what )
             {
+            // 刷新UI消息
             case HANDLER_INVALIDATE :
             {
                 if ( appFragment != null )
                     appFragment.refresh();
                 break;
             }
-            case HANDLER_SHOWPROGRESSDIALOG :
+            // 显示ProgressDialog
+            case HANDLER_SHOW_PROGRESSDIALOG :
             {
                 Bundle bundle = msg.getData();
-                CharSequence title = bundle.getCharSequence("title");
-                CharSequence message = bundle.getCharSequence("text");
+                String title = bundle.getString("title");
+                String message = bundle.getString("message");
                 showProgressDialog(title, message);
                 break;
             }
-            case HANDLER_CLOSEPROGRESSDIALOG :
+            // 关闭ProgressDialog
+            case HANDLER_CLOSE_PROGRESSDIALOG :
             {
                 closeProgressDialog();
                 break;
             }
-            case HANDLER_SHOWNOTIFICATION :
+            // 显示通知
+            case HANDLER_SHOW_NOTIFICATION :
             {
                 Bundle bundle = msg.getData();
                 int id = bundle.getInt("id");
-                CharSequence ticker = bundle.getCharSequence("ticker");
-                CharSequence contentTitle = bundle.getCharSequence("title");
-                CharSequence contentText = bundle.getCharSequence("text");
+                String ticker = bundle.getString("ticker");
+                String contentTitle = bundle.getString("title");
+                String contentText = bundle.getString("text");
                 int flags = bundle.getInt("flags");
                 showNotification(id, ticker, contentTitle, contentText, flags);
                 break;
             }
+            // 安装应用
             case HANDLER_INSTALL :
             {
                 Bundle bundle = msg.getData();
@@ -120,11 +120,6 @@ public class MainActivity extends FragmentActivity
         return handler;
     }
 
-    public AppService getService()
-    {
-        return appService;
-    }
-
     public Menu getMenu()
     {
         return menu;
@@ -142,8 +137,8 @@ public class MainActivity extends FragmentActivity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setDisplayShowTitleEnabled(false);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Force to use overflow button
         try
@@ -161,28 +156,9 @@ public class MainActivity extends FragmentActivity
         {
             // Ignore
         }
-
-        Intent intent = new Intent(this, AppService.class);
-        bindService(intent, connection, BIND_AUTO_CREATE);
+        ((SimpleBackupApplication) getApplication()).getExecutorService()
+                .submit(new CheckStatusThread(this));
     }
-
-    private ServiceConnection connection = new ServiceConnection()
-    {
-
-        @Override
-        public void onServiceDisconnected( ComponentName name )
-        {
-            appService = null;
-        }
-
-        @Override
-        public void onServiceConnected( ComponentName name , IBinder service )
-        {
-            appService = ((AppService.ServiceBinder) service).getService();
-            System.out.println("Service连接成功");
-            // 执行Service内部自己的方法
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu( Menu menu )
@@ -195,31 +171,17 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if ( appFragment != null )
+            appFragment.refleshAll();
+    }
+
+    @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        unbindService(connection);
-    }
-
-    /**
-     * 启动时检查各项设置
-     * 
-     * @return 检查结果
-     */
-    private int init()
-    {
-        // root权限
-        if ( !ShellUtil.RootCmd("") )
-            return STATUS_NO_ROOT;
-        // busybox是否安装
-        if ( !ShellUtil.Cmd("busybox") )
-            return STATUS_NO_BUSYBOX;
-        // SD卡是否存在
-        if ( !ShellUtil.Cmd("cd /mnt/sdcard") )
-            return STATUS_NO_SDCARD;
-        // 用户程序数目
-        //
-        return STATUS_OK;
     }
 
     /**
@@ -239,6 +201,10 @@ public class MainActivity extends FragmentActivity
             progressDialog.setTitle(title);
             progressDialog.setMessage(message);
             progressDialog.show();
+        }
+        else
+        {
+            progressDialog.setMessage(message);
         }
     }
 

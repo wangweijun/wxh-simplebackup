@@ -3,14 +3,13 @@ package com.Cissoid.simplebackup.app;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
-import android.widget.Toast;
 
 import com.Cissoid.simplebackup.MainActivity;
 import com.Cissoid.simplebackup.SimpleBackupApplication;
-import com.Cissoid.simplebackup.util.CopyUtil;
+import com.wxhcn.simplebackup.R;
 
 /**
  * @author Wxh
@@ -18,12 +17,12 @@ import com.Cissoid.simplebackup.util.CopyUtil;
  */
 public class AppInfo
 {
-    public static final int TYPE_LOCALSDCARD = 0x0;
+    public static final int TYPE_LOCAL_SDCARD = 0x0;
     public static final int TYPE_LOCAL = 0x1;
     public static final int TYPE_SDCARD = 0x10;
-    public static final int MODE_APPDATA = 0x0;
-    public static final int MODE_APPONLY = 0x1;
-    public static final int MODE_DATAONLY = 0x10;
+    public static final int MODE_APP_DATA = 0x0;
+    public static final int MODE_APP_ONLY = 0x1;
+    public static final int MODE_DATA_ONLY = 0x10;
     private int id;
     /**
      * 是SD卡上的备份还是已安装程序
@@ -32,7 +31,7 @@ public class AppInfo
     /**
      * 备份模式
      */
-    public int mode = MODE_APPDATA;
+    public int mode = -1;
     /**
      * 应用名称
      */
@@ -61,7 +60,7 @@ public class AppInfo
     /**
      * 备份时间
      */
-    private String backupTime = "无备份";
+    private String backupTime = "";
 
     private MainActivity activity;
     private View view = null;
@@ -69,25 +68,26 @@ public class AppInfo
     public AppInfo( MainActivity activity )
     {
         this.activity = activity;
+        backupTime = activity.getString(R.string.app_list_backup_time_empty);
     }
 
-    public void backup()
+    public void backup( int mode )
     {
         SimpleBackupApplication application = (SimpleBackupApplication) activity
                 .getApplication();
         final Handler handler = activity.getHandler();
         AppThread thread = new AppThread(activity, this);
-        thread.mode = AppThread.MODE_BACKUP;
+        thread.mode = mode;
         application.getExecutorService().submit(thread);
     }
 
-    public void restore()
+    public void restore( int mode )
     {
         SimpleBackupApplication application = (SimpleBackupApplication) activity
                 .getApplication();
         final Handler handler = activity.getHandler();
         AppThread thread = new AppThread(activity, this);
-        thread.mode = AppThread.MODE_RESTORE;
+        thread.mode = mode;
         application.getExecutorService().submit(thread);
     }
 
@@ -96,6 +96,42 @@ public class AppInfo
         Uri uri = Uri.fromParts("package", this.getPackageName(), null);
         Intent intent = new Intent(Intent.ACTION_DELETE, uri);
         activity.startActivity(intent);
+    }
+
+    public String getBackupInfo()
+    {
+        String backupInfo = backupTime;
+        switch ( mode )
+        {
+        case MODE_APP_DATA :
+            backupInfo += ","
+                    + activity.getString(R.string.app_dialog_button_backup_app)
+                    + "/"
+                    + activity
+                            .getString(R.string.app_dialog_button_backup_data);
+            break;
+        case MODE_APP_ONLY :
+            backupInfo += ","
+                    + activity.getString(R.string.app_dialog_button_backup_app);
+            break;
+        case MODE_DATA_ONLY :
+            backupInfo += ","
+                    + activity
+                            .getString(R.string.app_dialog_button_backup_data);
+            break;
+        default :
+            break;
+        }
+        return backupInfo;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public MainActivity getActivity()
+    {
+        return activity;
     }
 
     /**
@@ -258,7 +294,7 @@ public class AppInfo
     public void setBackupAppInfo( AppInfo backupAppInfo )
     {
         this.backupTime = backupAppInfo.getBackupTime();
-        type = TYPE_LOCALSDCARD;
+        type = TYPE_LOCAL_SDCARD;
         mode = backupAppInfo.mode;
     }
 
