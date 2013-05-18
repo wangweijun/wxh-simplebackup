@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
 
 import com.Cissoid.simplebackup.app.AppFragment;
 import com.Cissoid.simplebackup.home.HomePageFragment;
@@ -18,7 +17,7 @@ import com.wxhcn.simplebackup.R;
  * @since 2013.03.23
  * 
  */
-public class SectionPagerAdapter extends FragmentStatePagerAdapter
+public class SectionPagerAdapter extends FragmentPagerAdapter
 {
     private MainActivity activity;
 
@@ -43,14 +42,17 @@ public class SectionPagerAdapter extends FragmentStatePagerAdapter
         {
         case 0 :
             fragment = new HomePageFragment();
+            activity.setHomePageFragment((HomePageFragment) fragment);
             args.putInt(HomePageFragment.ARG_SECTION_NUMBER, position + 1);
             break;
         case 1 :
             fragment = new AppFragment();
+            activity.setAppFragment((AppFragment) fragment);
             args.putInt(AppFragment.ARG_SECTION_NUMBER, position + 1);
             break;
         case 2 :
             fragment = new SmsFragment();
+            activity.setSmsFragment((SmsFragment) fragment);
             args.putInt(SmsFragment.ARG_SECTION_NUMBER, position + 1);
             break;
         }
@@ -78,5 +80,12 @@ public class SectionPagerAdapter extends FragmentStatePagerAdapter
             return activity.getString(R.string.title_sms);
         }
         return null;
+    }
+
+    @Override
+    public Object instantiateItem( View container , int position )
+    {
+        // TODO Auto-generated method stub
+        return super.instantiateItem(container, position);
     }
 }

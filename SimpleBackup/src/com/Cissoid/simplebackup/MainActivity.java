@@ -18,12 +18,16 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.AttributeSet;
 import android.view.Menu;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.Cissoid.simplebackup.app.AppFragment;
 import com.Cissoid.simplebackup.home.HomePageFragment;
+import com.Cissoid.simplebackup.sms.SmsBackupTask;
 import com.Cissoid.simplebackup.sms.SmsFragment;
+import com.Cissoid.simplebackup.sms.ThreadInfo;
 import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
@@ -57,10 +61,11 @@ public class MainActivity extends FragmentActivity
     private ViewPager mViewPager;
     private Menu menu;
     private ProgressDialog progressDialog = null;
-    private Status status;
+    private Status status = null;
     private AppFragment appFragment = null;
     private HomePageFragment homePageFragment = null;
     private SmsFragment smsFragment = null;
+    private DrawableChangeView drawableChangeView;
     public Handler handler = new Handler()
     {
         public void handleMessage( Message msg )
@@ -147,66 +152,35 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
         // ϵͳ״̬
         status = init();
+
         mSectionsPagerAdapter = new SectionPagerAdapter(
                 getSupportFragmentManager(), this);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
         mViewPager.setOnPageChangeListener(new OnPageChangeListener()
         {
 
             @Override
             public void onPageSelected( int arg0 )
             {
-                // TODO Auto-generated method stub
-
             }
 
             @Override
             public void onPageScrolled( int arg0 , float arg1 , int arg2 )
             {
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public void onPageScrollStateChanged( int arg0 )
             {
-                // TODO Auto-generated method stub
-
             }
         });
-        // Force to use overflow button
-        try
-        {
-            ViewConfiguration config = ViewConfiguration.get(this);
-            Field menuKeyField = ViewConfiguration.class
-                    .getDeclaredField("sHasPermanentMenuKey");
-            if ( menuKeyField != null )
-            {
-                menuKeyField.setAccessible(true);
-                menuKeyField.setBoolean(config, false);
-            }
-        }
-        catch (Exception ex)
-        {
-            // Ignore
-        }
-        // ���״̬
-        ((SimpleBackupApplication) getApplication()).getExecutorService()
-                .submit(new CheckStatusThread(this));
     }
-
-    // @Override
-    // public boolean onCreateOptionsMenu( Menu menu )
-    // {
-    // // Inflate the menu; this adds items to the action bar if it is present.
-    // getMenuInflater().inflate(R.menu.main, menu);
-    // this.menu = menu;
-    //
-    // return true;
-    // }
 
     @Override
     protected void onResume()
@@ -325,5 +299,23 @@ public class MainActivity extends FragmentActivity
             status.setSdcard(true);
         }
         return status;
+    }
+
+    /**
+     * @param homePageFragment
+     *            the homePageFragment to set
+     */
+    public void setHomePageFragment( HomePageFragment homePageFragment )
+    {
+        this.homePageFragment = homePageFragment;
+    }
+
+    /**
+     * @param smsFragment
+     *            the smsFragment to set
+     */
+    public void setSmsFragment( SmsFragment smsFragment )
+    {
+        this.smsFragment = smsFragment;
     }
 }

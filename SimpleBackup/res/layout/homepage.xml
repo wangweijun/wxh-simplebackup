@@ -13,7 +13,7 @@
         android:layout_below="@+id/home_title_root"
         android:layout_marginTop="110dp"
         android:text="@string/home_title_busybox"
-        android:textColor="#33B5E5"
+        android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_below="@+id/home_title_sdcard"
         android:layout_marginTop="106dp"
         android:text="@string/home_title_root"
-        android:textColor="#33B5E5"
+        android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
     <TextView
@@ -36,7 +36,7 @@
         android:layout_marginLeft="44dp"
         android:layout_marginTop="41dp"
         android:text="@string/home_title_sdcard"
-        android:textColor="#33B5E5"
+        android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
     <TextView
@@ -71,7 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/home_status_sdcard"
         android:layout_below="@+id/home_status_sdcard"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/home_message_root"
@@ -79,7 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/home_status_root"
         android:layout_below="@+id/home_title_root"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/home_message_busybox"
@@ -87,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/home_status_busybox"
         android:layout_below="@+id/home_title_busybox"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>
