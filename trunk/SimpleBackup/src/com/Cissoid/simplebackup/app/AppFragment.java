@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.Status;
 import com.wxhcn.simplebackup.R;
 
 /**
@@ -28,12 +29,15 @@ public class AppFragment extends ListFragment
     private Applist applist;
     private AppAdapter appAdapter = null;
     private Menu menu;
+    private Status status;
 
     @Override
     public View onCreateView( LayoutInflater inflater , ViewGroup container ,
             Bundle savedInstanceState )
     {
-        setHasOptionsMenu(true);
+        Bundle bundle = getArguments();
+        status = (Status) bundle.getSerializable("status");
+        //setHasOptionsMenu(true);
         applist = new Applist((MainActivity) getActivity());
         appAdapter = new AppAdapter(this, applist);
         setListAdapter(appAdapter);
@@ -42,15 +46,15 @@ public class AppFragment extends ListFragment
 
     }
 
-    @Override
-    public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
-    {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_multi_select).setVisible(true);
-        this.menu = menu;
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
+//    {
+//        menu.clear();
+//        getActivity().getMenuInflater().inflate(R.menu.main, menu);
+//        menu.findItem(R.id.menu_multi_select).setVisible(true);
+//        this.menu = menu;
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item )
@@ -103,6 +107,14 @@ public class AppFragment extends ListFragment
             checkBox.setChecked(flag);
             appAdapter.setSelectAll(flag);
         }
+    }
+
+    /**
+     * @return the status
+     */
+    public Status getStatus()
+    {
+        return status;
     }
 
 }

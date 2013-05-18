@@ -26,7 +26,7 @@ public class SmsFragment extends ListFragment
             Bundle savedInstanceState )
     {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         smslist = new Smslist((MainActivity) getActivity());
         smsAdapter = new SmsAdapter(this, smslist);
         this.setListAdapter(smsAdapter);
@@ -34,15 +34,15 @@ public class SmsFragment extends ListFragment
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
-    {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_multi_select).setVisible(true);
-        this.menu = menu;
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
+//    {
+//        menu.clear();
+//        getActivity().getMenuInflater().inflate(R.menu.main, menu);
+//        menu.findItem(R.id.menu_multi_select).setVisible(true);
+//        this.menu = menu;
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
     @Override
     public boolean onContextItemSelected( MenuItem item )

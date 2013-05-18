@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.Cissoid.simplebackup.SimpleBackupApplication;
+import com.Cissoid.simplebackup.Status;
 import com.wxhcn.simplebackup.R;
 
 /**
@@ -20,6 +21,7 @@ import com.wxhcn.simplebackup.R;
 
 public class AppInfoDialog extends DialogFragment
 {
+    private Status status;
     private AppInfo appInfo;
 
     public AppInfo getAppInfo()
@@ -38,10 +40,11 @@ public class AppInfoDialog extends DialogFragment
      * @param appInfo
      * @return 生成的实例
      */
-    static AppInfoDialog newInstance( Context context , AppInfo appInfo )
+    static AppInfoDialog newInstance( Status status , AppInfo appInfo )
     {
         AppInfoDialog appInfoDialog = new AppInfoDialog();
         appInfoDialog.setAppInfo(appInfo);
+        appInfoDialog.setStatus(status);
         return appInfoDialog;
     }
 
@@ -59,11 +62,10 @@ public class AppInfoDialog extends DialogFragment
         Button backupDataButton = (Button) view
                 .findViewById(R.id.app_dialog_backup_data);
         Button restoreButton = (Button) view
-                .findViewById(R.id.app_dialog_restore);
+                .findViewById(R.id.app_dialog_restore_all);
         Button uninstallButton = (Button) view
                 .findViewById(R.id.app_dialog_uninstall);
-        if ( ((SimpleBackupApplication) appInfo.getActivity().getApplication())
-                .canBackupData() )
+        if ( status.isRoot() && status.isBusybox() )
         {
             backupAllButton.setOnClickListener(new OnClickListener()
             {
@@ -91,7 +93,9 @@ public class AppInfoDialog extends DialogFragment
         else
         {
             backupAllButton.setClickable(false);
+            backupAllButton.setVisibility(View.INVISIBLE);
             backupDataButton.setClickable(false);
+            backupDataButton.setVisibility(View.INVISIBLE);
         }
 
         backupAppButton.setOnClickListener(new OnClickListener()
@@ -128,5 +132,14 @@ public class AppInfoDialog extends DialogFragment
         });
         dialog.setContentView(view);
         return dialog;
+    }
+
+    /**
+     * @param status
+     *            the status to set
+     */
+    public void setStatus( Status status )
+    {
+        this.status = status;
     }
 }

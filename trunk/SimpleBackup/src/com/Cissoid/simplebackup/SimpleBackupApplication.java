@@ -17,16 +17,7 @@ public class SimpleBackupApplication extends Application
      * 线程池
      */
     private ExecutorService executorService = Executors.newFixedThreadPool(10);
-    /**
-     * root标志
-     */
-    private boolean hasRoot = false;
-    /**
-     * busybox标志
-     */
-    private boolean hasBusybox = false;
 
-    private boolean hasSDCard = false;
 
     public void showNotification( final int icon , final CharSequence ticker ,
             final CharSequence contentTitle , final CharSequence contentText )
@@ -55,62 +46,5 @@ public class SimpleBackupApplication extends Application
     public ExecutorService getExecutorService()
     {
         return executorService;
-    }
-
-    /**
-     * @return the hasRoot
-     */
-
-    public boolean isRoot()
-    {
-        return hasRoot;
-    }
-
-    /**
-     * @param hasRoot
-     *            the isRoot to set
-     */
-    public void setRoot( boolean hasRoot )
-    {
-        this.hasRoot = hasRoot;
-    }
-
-    /**
-     * @return the hasBusybox
-     */
-    public boolean hasBusybox()
-    {
-        return hasBusybox;
-    }
-
-    /**
-     * @param hasBusybox
-     *            the hasBusybox to set
-     */
-    public void setBusybox( boolean hasBusybox )
-    {
-        this.hasBusybox = hasBusybox;
-    }
-
-    /**
-     * @return the hasSDCard
-     */
-    public boolean hasSDCard()
-    {
-        return hasSDCard;
-    }
-
-    /**
-     * @param hasSDCard
-     *            the hasSDCard to set
-     */
-    public void setSDCard( boolean hasSDCard )
-    {
-        this.hasSDCard = hasSDCard;
-    }
-
-    public boolean canBackupData()
-    {
-        return hasRoot && hasBusybox;
     }
 }

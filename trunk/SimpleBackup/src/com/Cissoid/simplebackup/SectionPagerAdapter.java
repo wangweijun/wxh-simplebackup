@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import com.Cissoid.simplebackup.app.AppFragment;
 import com.Cissoid.simplebackup.home.HomePageFragment;
@@ -16,7 +18,7 @@ import com.wxhcn.simplebackup.R;
  * @since 2013.03.23
  * 
  */
-public class SectionPagerAdapter extends FragmentPagerAdapter
+public class SectionPagerAdapter extends FragmentStatePagerAdapter
 {
     private MainActivity activity;
 
@@ -34,6 +36,9 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
         // below) with the page number as its lone argument.
         Fragment fragment = null;
         Bundle args = new Bundle();
+        args.putBoolean("sdcard", activity.getStatus().isSdcard());
+        args.putBoolean("root", activity.getStatus().isRoot());
+        args.putBoolean("busybox", activity.getStatus().isBusybox());
         switch ( position )
         {
         case 0 :
@@ -42,7 +47,6 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
             break;
         case 1 :
             fragment = new AppFragment();
-            activity.setAppFragment(fragment);
             args.putInt(AppFragment.ARG_SECTION_NUMBER, position + 1);
             break;
         case 2 :

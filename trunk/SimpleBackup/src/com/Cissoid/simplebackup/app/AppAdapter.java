@@ -16,7 +16,7 @@ import com.wxhcn.simplebackup.R;
 
 public class AppAdapter extends BaseAdapter
 {
-    private Fragment fragment;
+    private AppFragment fragment;
     private Applist applist;
     private boolean flag;
 
@@ -27,7 +27,7 @@ public class AppAdapter extends BaseAdapter
      * @param applist
      *            App¡–±Ì
      */
-    public AppAdapter( Fragment fragment , Applist applist )
+    public AppAdapter( AppFragment fragment , Applist applist )
     {
         // this.listView = listView;
         this.fragment = fragment;
@@ -83,7 +83,7 @@ public class AppAdapter extends BaseAdapter
             public void onClick( View v )
             {
                 AppInfoDialog appInfoDialog = AppInfoDialog.newInstance(
-                        fragment.getActivity(), appItem);
+                        fragment.getStatus(), appItem);
                 appInfoDialog.show(fragment.getFragmentManager(), "info");
             }
         });
