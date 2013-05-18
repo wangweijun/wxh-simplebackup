@@ -29,61 +29,27 @@ public class AppFragment extends ListFragment
     public static final String ARG_SECTION_NUMBER = "section_number";
     private Applist applist;
     private AppAdapter appAdapter = null;
-    private Menu menu;
     private Status status;
+
+    @Override
+    public void onCreate( Bundle savedInstanceState )
+    {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        status = new Status();
+        status.setSdcard(getArguments().getBoolean("sdcard"));
+        status.setRoot(getArguments().getBoolean("root"));
+        status.setBusybox(getArguments().getBoolean("busybox"));
+        applist = new Applist((MainActivity) getActivity());
+        appAdapter = new AppAdapter(this, applist);
+        setListAdapter(appAdapter);
+    }
 
     @Override
     public View onCreateView( LayoutInflater inflater , ViewGroup container ,
             Bundle savedInstanceState )
     {
-        status = new Status();
-        // setHasOptionsMenu(true);
-        applist = new Applist((MainActivity) getActivity());
-        appAdapter = new AppAdapter(this, applist);
-        setListAdapter(appAdapter);
-        this.menu = ((MainActivity) getActivity()).getMenu();
-//        View rootView = inflater.inflate(R.layout.fragment, container);
-//        DrawableChangeView drawableChangeView = (DrawableChangeView) rootView
-//                .findViewById(R.id.drawableChangeView);
-//        return rootView;
-         return inflater.inflate(R.layout.fragment, container, false);
-    }
-
-    // @Override
-    // public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
-    // {
-    // menu.clear();
-    // getActivity().getMenuInflater().inflate(R.menu.main, menu);
-    // menu.findItem(R.id.menu_multi_select).setVisible(true);
-    // this.menu = menu;
-    // super.onCreateOptionsMenu(menu, inflater);
-    // }
-
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item )
-    {
-        // TODO Auto-generated method stub
-        switch ( item.getItemId() )
-        {
-        case R.id.menu_multi_select :
-            applist.setMultiSelect(!applist.isMultiSelect());
-            enterMultiMode();
-            refresh();
-            break;
-        case R.id.menu_select_all :
-            selectAll(true);
-            break;
-        case R.id.menu_accept :
-            break;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void enterMultiMode()
-    {
-        menu.setGroupVisible(R.id.MENU_GROUP_MAIN, false);
-        menu.setGroupVisible(R.id.MENU_GROUP_MULTI, true);
+        return inflater.inflate(R.layout.fragment, container, false);
     }
 
     public void refresh()
@@ -99,17 +65,6 @@ public class AppFragment extends ListFragment
         setListAdapter(appAdapter);
         appAdapter.notifyDataSetChanged();
         appAdapter.notifyDataSetInvalidated();
-    }
-
-    public void selectAll( boolean flag )
-    {
-        for ( int i = 0 ; i < getListView().getChildCount() ; i++ )
-        {
-            View view = (View) getListView().getChildAt(i);
-            CheckBox checkBox = (CheckBox) view.findViewById(R.id.sms_check);
-            checkBox.setChecked(flag);
-            appAdapter.setSelectAll(flag);
-        }
     }
 
     /**

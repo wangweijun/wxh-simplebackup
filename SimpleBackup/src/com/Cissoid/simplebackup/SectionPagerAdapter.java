@@ -42,7 +42,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
         {
         case 0 :
             fragment = new HomePageFragment();
-            activity.setHomePageFragment((HomePageFragment) fragment);
+
             args.putInt(HomePageFragment.ARG_SECTION_NUMBER, position + 1);
             break;
         case 1 :

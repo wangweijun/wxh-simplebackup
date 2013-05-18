@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -59,11 +60,9 @@ public class MainActivity extends FragmentActivity
      */
     private SectionPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private Menu menu;
     private ProgressDialog progressDialog = null;
     private Status status = null;
     private AppFragment appFragment = null;
-    private HomePageFragment homePageFragment = null;
     private SmsFragment smsFragment = null;
     private DrawableChangeView drawableChangeView;
     public Handler handler = new Handler()
@@ -130,11 +129,6 @@ public class MainActivity extends FragmentActivity
         return handler;
     }
 
-    public Menu getMenu()
-    {
-        return menu;
-    }
-
     public void setStatus( Status status )
     {
         this.status = status;
@@ -150,34 +144,40 @@ public class MainActivity extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        drawableChangeView = (DrawableChangeView) this
+                .findViewById(R.id.drawableChangeView);
+        Drawable[] drawables = new Drawable[3];
+        drawables[0] = this.getResources().getDrawable(R.drawable.holo);
+        drawables[1] = this.getResources().getDrawable(R.drawable.white);
+        drawables[2] = this.getResources().getDrawable(R.drawable.white);
+        drawableChangeView.setDrawables(drawables);
         // ϵͳ״̬
         status = init();
-
         mSectionsPagerAdapter = new SectionPagerAdapter(
                 getSupportFragmentManager(), this);
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
-
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         mViewPager.setOnPageChangeListener(new OnPageChangeListener()
         {
-
             @Override
-            public void onPageSelected( int arg0 )
+            public void onPageSelected( int position )
             {
             }
 
             @Override
-            public void onPageScrolled( int arg0 , float arg1 , int arg2 )
+            public void onPageScrolled( int position , float degree ,
+                    int maxWidth )
             {
-
+                drawableChangeView.setPosition(position);
+                drawableChangeView.setDegree(degree);
+                drawableChangeView.invalidate();
             }
 
             @Override
             public void onPageScrollStateChanged( int arg0 )
             {
+
             }
         });
     }
@@ -299,15 +299,6 @@ public class MainActivity extends FragmentActivity
             status.setSdcard(true);
         }
         return status;
-    }
-
-    /**
-     * @param homePageFragment
-     *            the homePageFragment to set
-     */
-    public void setHomePageFragment( HomePageFragment homePageFragment )
-    {
-        this.homePageFragment = homePageFragment;
     }
 
     /**
