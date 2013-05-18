@@ -83,7 +83,7 @@ public class SmsRestoreTask extends AsyncTask<ThreadInfo, Integer, Integer>
                     // 把列表中每一个SmsInfo对象插入数据库
                     for ( SmsInfo smsInfo : smsInfos )
                     {
-                        progressDialog.setProgress(num);
+                        onProgressUpdate(num);
                         // 查找是否该条短信已存在
                         cursor = contentResolver.query(SMS_URI, null, "date=?",
                                 new String[]
