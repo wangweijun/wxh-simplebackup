@@ -11,16 +11,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
 import android.view.ViewConfiguration;
 
 import com.Cissoid.simplebackup.app.AppFragment;
+import com.Cissoid.simplebackup.home.HomePageFragment;
+import com.Cissoid.simplebackup.sms.SmsFragment;
+import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
 /**
@@ -53,9 +57,10 @@ public class MainActivity extends FragmentActivity
     private ViewPager mViewPager;
     private Menu menu;
     private ProgressDialog progressDialog = null;
-
+    private Status status;
     private AppFragment appFragment = null;
-
+    private HomePageFragment homePageFragment = null;
+    private SmsFragment smsFragment = null;
     public Handler handler = new Handler()
     {
         public void handleMessage( Message msg )
@@ -125,21 +130,53 @@ public class MainActivity extends FragmentActivity
         return menu;
     }
 
+    public void setStatus( Status status )
+    {
+        this.status = status;
+    }
+
+    public Status getStatus()
+    {
+        return status;
+    }
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 系统状态
+        status = init();
         mSectionsPagerAdapter = new SectionPagerAdapter(
                 getSupportFragmentManager(), this);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOnPageChangeListener(new OnPageChangeListener()
+        {
 
-//        getActionBar().setDisplayShowTitleEnabled(false);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+            @Override
+            public void onPageSelected( int arg0 )
+            {
+                // TODO Auto-generated method stub
 
+            }
+
+            @Override
+            public void onPageScrolled( int arg0 , float arg1 , int arg2 )
+            {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged( int arg0 )
+            {
+                // TODO Auto-generated method stub
+
+            }
+        });
         // Force to use overflow button
         try
         {
@@ -156,19 +193,20 @@ public class MainActivity extends FragmentActivity
         {
             // Ignore
         }
+        // 检测状态
         ((SimpleBackupApplication) getApplication()).getExecutorService()
                 .submit(new CheckStatusThread(this));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu( Menu menu )
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        this.menu = menu;
-
-        return true;
-    }
+    // @Override
+    // public boolean onCreateOptionsMenu( Menu menu )
+    // {
+    // // Inflate the menu; this adds items to the action bar if it is present.
+    // getMenuInflater().inflate(R.menu.main, menu);
+    // this.menu = menu;
+    //
+    // return true;
+    // }
 
     @Override
     protected void onResume()
@@ -256,11 +294,36 @@ public class MainActivity extends FragmentActivity
     }
 
     /**
-     * @param fragment
-     *            the appFragment to set
+     * 
+     * @param appFragment
      */
-    public void setAppFragment( Fragment fragment )
+    public void setAppFragment( AppFragment appFragment )
     {
-        this.appFragment = (AppFragment) fragment;
+        this.appFragment = appFragment;
+    }
+
+    private Status init()
+    {
+        Status status = new Status();
+
+        // root权限
+        if ( ShellUtil.RootCmd("") )
+        {
+            status.setRoot(true);
+        }
+
+        // busybox是否安装
+        if ( ShellUtil.Cmd("busybox") )
+        {
+            status.setBusybox(true);
+        }
+
+        // SD卡是否存在
+        if ( Environment.getExternalStorageState().equalsIgnoreCase(
+                Environment.MEDIA_MOUNTED) )
+        {
+            status.setSdcard(true);
+        }
+        return status;
     }
 }

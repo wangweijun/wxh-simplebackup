@@ -6,66 +6,87 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/home_title_busybox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/home_title_root"
+        android:layout_below="@+id/home_title_root"
         android:layout_marginTop="110dp"
-        android:text="@string/home_title_sdcard"
-        android:textColor="#33B5E5"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="106dp"
         android:text="@string/home_title_busybox"
         android:textColor="#33B5E5"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/home_title_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/home_title_sdcard"
+        android:layout_below="@+id/home_title_sdcard"
+        android:layout_marginTop="106dp"
+        android:text="@string/home_title_root"
+        android:textColor="#33B5E5"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/home_title_sdcard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="44dp"
         android:layout_marginTop="41dp"
-        android:text="@string/home_title_root"
+        android:text="@string/home_title_sdcard"
         android:textColor="#33B5E5"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/home_status_sdcard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
+        android:layout_above="@+id/home_title_root"
         android:layout_centerHorizontal="true"
-        android:text="TextView"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/home_status_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBaseline="@+id/home_title_root"
+        android:layout_alignBottom="@+id/home_title_root"
         android:layout_centerHorizontal="true"
-        android:text="TextView"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/home_status_busybox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignBaseline="@+id/home_title_busybox"
+        android:layout_alignBottom="@+id/home_title_busybox"
         android:layout_centerHorizontal="true"
-        android:text="TextView"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/home_message_sdcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/home_status_sdcard"
+        android:layout_below="@+id/home_status_sdcard"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/home_message_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/home_status_root"
+        android:layout_below="@+id/home_title_root"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/home_message_busybox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/home_status_busybox"
+        android:layout_below="@+id/home_title_busybox"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

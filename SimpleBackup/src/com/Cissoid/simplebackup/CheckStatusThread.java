@@ -20,8 +20,7 @@ public class CheckStatusThread implements Runnable
     @Override
     public void run()
     {
-        SimpleBackupApplication application = (SimpleBackupApplication) activity
-                .getApplication();
+        Status status = new Status();
         Handler handler = activity.getHandler();
         Bundle bundle = new Bundle();
         Message message = new Message();
@@ -36,7 +35,7 @@ public class CheckStatusThread implements Runnable
         // root权限
         if ( ShellUtil.RootCmd("") )
         {
-            application.setRoot(true);
+            status.setRoot(true);
         }
         try
         {
@@ -56,7 +55,7 @@ public class CheckStatusThread implements Runnable
         // busybox是否安装
         if ( ShellUtil.Cmd("busybox") )
         {
-            application.setBusybox(true);
+            status.setBusybox(true);
         }
         try
         {
@@ -77,7 +76,7 @@ public class CheckStatusThread implements Runnable
         if ( Environment.getExternalStorageState().equalsIgnoreCase(
                 Environment.MEDIA_MOUNTED) )
         {
-            application.setSDCard(true);
+            status.setSdcard(true);
         }
         try
         {
@@ -91,6 +90,6 @@ public class CheckStatusThread implements Runnable
         message = new Message();
         message.what = MainActivity.HANDLER_CLOSE_PROGRESSDIALOG;
         handler.sendMessage(message);
+        activity.setStatus(status);
     }
-
 }
