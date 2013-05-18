@@ -113,7 +113,6 @@ public class AppAdapter extends BaseAdapter
             backupInfo.setTextColor(Color.rgb(255, 187, 51));
             break;
         }
-
         if ( checkBox != null && applist.isMultiSelect() == true )
         {
             checkBox.setVisibility(View.VISIBLE);

@@ -2,6 +2,7 @@ package com.Cissoid.simplebackup;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,9 +17,9 @@ import android.view.View;
 public class DrawableChangeView extends View
 {
 
-    private int mPosition;
-    private int mPrevPosition;
-    private float mDegree;
+    private int mPosition = 0;
+    private int mPrevPosition = 1;
+    private float mDegree = 0;
 
     private Drawable[] mDrawables;
     private Drawable mBack;
@@ -61,6 +62,7 @@ public class DrawableChangeView extends View
     @Override
     protected void onDraw( Canvas canvas )
     {
+        
         if ( mDrawables == null )
         {
             return;
@@ -80,7 +82,6 @@ public class DrawableChangeView extends View
                 mBack = mDrawables[mPosition];
             }
         }
-
         fore.setAlpha(alpha);
         mBack.setAlpha(255);
         mBack.draw(canvas);
