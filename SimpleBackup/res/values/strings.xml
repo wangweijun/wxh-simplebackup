@@ -42,5 +42,8 @@
     <string name="home_busybox_success">detected busybox.</string>
     <string name="home_busybox_false">Busybox not detected,\nyou cannot backup and restore app data.</string>
     <string name="app_dialog_restore_bar">Restore</string>
+    <string name="home_title_bae">BAE:</string>
+    <string name="home_bae_success">Logged.Swipe up to logout.</string>
+    <string name="home_bae_failed">Swipe up to login.</string>
 
 </resources>
