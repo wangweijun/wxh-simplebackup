@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
+import com.cissoid.simplebackup.R;
 import com.cissoid.simplebackup.app.AppFragment;
 import com.cissoid.simplebackup.sms.SmsFragment;
 import com.cissoid.simplebackup.util.DBUtil;

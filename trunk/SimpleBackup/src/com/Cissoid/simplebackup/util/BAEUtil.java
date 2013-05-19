@@ -2,7 +2,6 @@ package com.cissoid.simplebackup.util;
 
 import android.content.ContentValues;
 import android.os.Environment;
-import android.widget.Toast;
 
 import com.baidu.oauth.BaiduOAuth;
 import com.baidu.oauth.BaiduOAuth.BaiduOAuthResponse;
