@@ -38,6 +38,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
         args.putBoolean("sdcard", activity.getStatus().isSdcard());
         args.putBoolean("root", activity.getStatus().isRoot());
         args.putBoolean("busybox", activity.getStatus().isBusybox());
+        args.putBoolean("bae", activity.getStatus().isBae());
         switch ( position )
         {
         case 0 :

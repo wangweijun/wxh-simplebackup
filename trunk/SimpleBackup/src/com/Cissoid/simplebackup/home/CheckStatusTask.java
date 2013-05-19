@@ -2,6 +2,7 @@ package com.Cissoid.simplebackup.home;
 
 import com.Cissoid.simplebackup.MainActivity;
 import com.Cissoid.simplebackup.Status;
+import com.Cissoid.simplebackup.util.DBUtil;
 import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
@@ -44,46 +45,48 @@ public class CheckStatusTask extends AsyncTask<Void, Void, Void>
         status = new com.Cissoid.simplebackup.Status();
         // root权限
         if ( ShellUtil.RootCmd("") )
-        {
             status.setRoot(true);
-        }
         try
         {
             Thread.sleep(1000);
         }
         catch (InterruptedException e1)
         {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+
         }
         // busybox是否安装
         if ( ShellUtil.Cmd("busybox") )
-        {
             status.setBusybox(true);
-        }
         try
         {
             Thread.sleep(1000);
         }
         catch (InterruptedException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
         // SD卡是否存在
         if ( Environment.getExternalStorageState().equalsIgnoreCase(
                 Environment.MEDIA_MOUNTED) )
-        {
+
             status.setSdcard(true);
-        }
         try
         {
             Thread.sleep(1000);
         }
         catch (InterruptedException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+        }
+        if ( DBUtil.query().length() != 0 )
+            status.setBae(true);
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+
         }
         return null;
     }

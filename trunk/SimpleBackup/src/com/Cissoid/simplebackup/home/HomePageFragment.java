@@ -27,9 +27,11 @@ public class HomePageFragment extends Fragment
     private TextView statusSDCard;
     private TextView statusRoot;
     private TextView statusBusybox;
+    private TextView statusBae;
     private TextView messageSDCard;
     private TextView messageRoot;
     private TextView messageBusybox;
+    private TextView messageBae;
 
     @Override
     public void onCreate( Bundle savedInstanceState )
@@ -51,24 +53,17 @@ public class HomePageFragment extends Fragment
         statusRoot = (TextView) rootView.findViewById(R.id.home_status_root);
         statusBusybox = (TextView) rootView
                 .findViewById(R.id.home_status_busybox);
+        statusBae = (TextView) rootView.findViewById(R.id.home_status_bae);
         messageSDCard = (TextView) rootView
                 .findViewById(R.id.home_message_sdcard);
         messageRoot = (TextView) rootView.findViewById(R.id.home_message_root);
         messageBusybox = (TextView) rootView
                 .findViewById(R.id.home_message_busybox);
+        messageBae = (TextView) rootView.findViewById(R.id.home_message_bae);
         if ( status != null )
             refresh(status);
         return rootView;
     }
-
-    // @Override
-    // public void onCreateOptionsMenu( Menu menu , MenuInflater inflater )
-    // {
-    // menu.clear();
-    // getActivity().getMenuInflater().inflate(R.menu.main, menu);
-    // menu.findItem(R.id.menu_multi_select).setVisible(false);
-    // super.onCreateOptionsMenu(menu, inflater);
-    // }
 
     public void refresh( Status status )
     {
@@ -114,6 +109,18 @@ public class HomePageFragment extends Fragment
             // statusBusybox.setTextColor(Color.rgb(255, 68, 68));
             statusBusybox.setTextColor(Color.rgb(255, 255, 255));
             messageBusybox.setText(R.string.home_busybox_false);
+        }
+        if ( status.isBae() )
+        {
+            statusBae.setText(R.string.home_status_success);
+            statusBae.setTextColor(Color.rgb(255, 255, 255));
+            messageBusybox.setText(R.string.home_bae_success);
+        }
+        else
+        {
+            statusBae.setText(R.string.home_status_failed);
+            statusBae.setTextColor(Color.rgb(255, 255, 255));
+            messageBusybox.setText(R.string.home_bae_failed);
         }
     }
 

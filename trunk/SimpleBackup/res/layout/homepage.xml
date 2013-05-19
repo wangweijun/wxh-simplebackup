@@ -1,95 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:scrollbars="none" >
 
-    <TextView
-        android:id="@+id/home_title_busybox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/home_title_root"
-        android:layout_below="@+id/home_title_root"
-        android:layout_marginTop="110dp"
-        android:text="@string/home_title_busybox"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/home_title_root"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/home_title_sdcard"
-        android:layout_below="@+id/home_title_sdcard"
-        android:layout_marginTop="106dp"
-        android:text="@string/home_title_root"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/home_title_sdcard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="41dp"
-        android:text="@string/home_title_sdcard"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/home_status_sdcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/home_title_root"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/home_status_sdcard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/home_title_root"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/home_status_root"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/home_title_root"
+                android:layout_alignBottom="@+id/home_title_root"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/home_status_root"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/home_title_root"
-        android:layout_alignBottom="@+id/home_title_root"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/home_status_busybox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/home_title_busybox"
+                android:layout_alignBottom="@+id/home_title_busybox"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/home_status_busybox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/home_title_busybox"
-        android:layout_alignBottom="@+id/home_title_busybox"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/home_message_sdcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/home_status_sdcard"
+                android:layout_below="@+id/home_status_sdcard"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/home_message_sdcard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/home_status_sdcard"
-        android:layout_below="@+id/home_status_sdcard"
-        android:layout_marginTop="20dp"
-        android:textColor="#FFFFFF" />
+            <TextView
+                android:id="@+id/home_message_root"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/home_status_root"
+                android:layout_below="@+id/home_title_root"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/home_message_root"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/home_status_root"
-        android:layout_below="@+id/home_title_root"
-        android:layout_marginTop="20dp"
-        android:textColor="#FFFFFF" />
+            <TextView
+                android:id="@+id/home_title_sdcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="26dp"
+                android:layout_marginTop="42dp"
+                android:layout_toLeftOf="@+id/home_status_sdcard"
+                android:text="@string/home_title_sdcard"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/home_message_busybox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/home_status_busybox"
-        android:layout_below="@+id/home_title_busybox"
-        android:layout_marginTop="20dp"
-        android:textColor="#FFFFFF" />
+            <TextView
+                android:id="@+id/home_status_bae"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/home_title_bae"
+                android:layout_toRightOf="@+id/home_title_sdcard"
+                android:textSize="18sp" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/home_message_busybox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/home_status_busybox"
+                android:layout_below="@+id/home_title_busybox"
+                android:layout_marginTop="21dp"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/home_message_bae"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_status_bae"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/home_title_sdcard"
+                android:text=" "
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/home_title_root"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/home_title_sdcard"
+                android:layout_below="@+id/home_title_sdcard"
+                android:layout_marginTop="84dp"
+                android:text="@string/home_title_root"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/home_title_busybox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/home_title_root"
+                android:layout_below="@+id/home_message_root"
+                android:layout_marginTop="45dp"
+                android:text="@string/home_title_busybox"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/home_title_bae"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/home_title_busybox"
+                android:layout_below="@+id/home_message_busybox"
+                android:layout_marginTop="46dp"
+                android:text="@string/home_title_bae"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="          "
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/home_button_bae"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Button"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+</ScrollView>

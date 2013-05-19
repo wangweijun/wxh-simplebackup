@@ -29,6 +29,7 @@ import com.Cissoid.simplebackup.home.HomePageFragment;
 import com.Cissoid.simplebackup.sms.SmsBackupTask;
 import com.Cissoid.simplebackup.sms.SmsFragment;
 import com.Cissoid.simplebackup.sms.ThreadInfo;
+import com.Cissoid.simplebackup.util.DBUtil;
 import com.Cissoid.simplebackup.util.ShellUtil;
 import com.wxhcn.simplebackup.R;
 
@@ -282,22 +283,23 @@ public class MainActivity extends FragmentActivity
 
         // root权限
         if ( ShellUtil.RootCmd("") )
-        {
+
             status.setRoot(true);
-        }
 
         // busybox是否安装
         if ( ShellUtil.Cmd("busybox") )
-        {
+
             status.setBusybox(true);
-        }
 
         // SD卡是否存在
         if ( Environment.getExternalStorageState().equalsIgnoreCase(
                 Environment.MEDIA_MOUNTED) )
-        {
+
             status.setSdcard(true);
-        }
+
+        // BAE
+        if ( DBUtil.query().length() != 0 )
+            status.setBae(true);
         return status;
     }
 

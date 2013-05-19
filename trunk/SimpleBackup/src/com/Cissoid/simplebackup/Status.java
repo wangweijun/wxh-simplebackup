@@ -1,14 +1,11 @@
 package com.Cissoid.simplebackup;
 
-import java.io.Serializable;
-
 public class Status
 {
-    private static final long serialVersionUID = 1L;
-    private boolean root = true;
-    private boolean busybox = true;
-    private boolean sdcard = true;
-    private boolean bae = true;
+    private boolean root = false;
+    private boolean busybox = false;
+    private boolean sdcard = false;
+    private boolean bae = false;
 
     /**
      * @return the root
