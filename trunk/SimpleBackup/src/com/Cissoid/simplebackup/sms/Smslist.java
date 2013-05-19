@@ -128,6 +128,8 @@ public class Smslist
                     if ( smsHashByAddress.get(threadInfo.getAddress()) != null )
                     {
                         smsHashByAddress.get(threadInfo.getAddress())
+                                .setBakNumber(threadInfo.getNumber());
+                        smsHashByAddress.get(threadInfo.getAddress())
                                 .setBackupTime(threadInfo.getBackupTime());
                     }
                     else

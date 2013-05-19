@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -35,11 +37,13 @@ public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, ThreadInfo>
      */
     private final Uri SMS_URI = Uri.parse("content://sms");
     private MainActivity activity;
+    private SmsFragment fragment;
     private ProgressDialog progressDialog;
 
-    public SmsBackupTask( MainActivity activity )
+    public SmsBackupTask( SmsFragment fragment )
     {
-        this.activity = activity;
+        this.fragment = fragment;
+        this.activity = (MainActivity) fragment.getActivity();
         progressDialog = new ProgressDialog(activity);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle(activity
@@ -62,6 +66,9 @@ public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, ThreadInfo>
         ContentResolver contentResolver = activity.getContentResolver();
         for ( ThreadInfo threadInfo : params )
         {
+            String time = new SimpleDateFormat("yyyy.MM.dd HH:mm")
+                    .format(new Date(System.currentTimeMillis()));
+            threadInfo.setBackupTime(time);
             result = threadInfo;
             // 显示进度条
             progressDialog.setMax((int) threadInfo.getNumber());
@@ -180,7 +187,9 @@ public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, ThreadInfo>
     protected void onPostExecute( ThreadInfo result )
     {
         super.onPostExecute(result);
+        result.setBakNumber(result.getNumber());
         BAEUtil.upload(activity, result);
+        fragment.refresh();
         progressDialog.dismiss();
     }
 }

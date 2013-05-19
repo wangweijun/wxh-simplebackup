@@ -37,7 +37,7 @@ public class ThreadInfo
     /**
      * 要显示的备份信息
      */
-    private String backupTime = null;
+    private String backupTime = "";
 
     /**
      * @return the threadID

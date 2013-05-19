@@ -160,9 +160,9 @@ public class XmlUtil
             serializer.attribute(null, "number",
                     String.valueOf(threadInfo.getNumber()));
             // 记录备份时间
-            String time = new SimpleDateFormat(":yyyy.MM.dd HH:mm")
-                    .format(new Date(System.currentTimeMillis()));
-            serializer.attribute(null, "backupTime", time);
+
+            serializer
+                    .attribute(null, "backupTime", threadInfo.getBackupTime());
 
             for ( SmsInfo smsInfo : smsInfos )
             {

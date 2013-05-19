@@ -30,6 +30,7 @@ public class CheckStatusTask extends AsyncTask<Void, Void, Void>
         progressDialog = new ProgressDialog(fragment.getActivity());
         progressDialog.setMessage(fragment
                 .getString(R.string.main_dialog_checking_status));
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
     }

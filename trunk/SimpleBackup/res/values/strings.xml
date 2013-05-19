@@ -21,8 +21,8 @@
     <string name="app_dialog_button_backup_app">App</string>
     <string name="app_dialog_button_backup_data">Data</string>
     <string name="app_dialog_backup_bar">Backup</string>
-    <string name="app_list_backup_time">Backup Time</string>
-    <string name="app_list_backup_time_empty">No Backup File</string>
+    <string name="backup_time">Backup Time:</string>
+    <string name="no_backup_file">No Backup File</string>
     <string name="notification_backup_complete">Backup complete</string>
     <string name="sms_alert_message">What do you want to do?</string>
     <string name="sms_alert_backup">Backup</string>

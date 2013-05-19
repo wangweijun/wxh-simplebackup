@@ -35,14 +35,16 @@ public class SmsRestoreTask extends AsyncTask<ThreadInfo, Integer, Integer>
      * 主Activity
      */
     private MainActivity activity;
+    private SmsFragment fragment;
     /**
      * 进度条对话框
      */
     private ProgressDialog progressDialog;
 
-    public SmsRestoreTask( MainActivity activity )
+    public SmsRestoreTask( SmsFragment fragment )
     {
-        this.activity = activity;
+        this.fragment = fragment;
+        this.activity = (MainActivity) fragment.getActivity();
         progressDialog = new ProgressDialog(activity);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle(R.string.sms_dialog_restore_title);
@@ -131,6 +133,7 @@ public class SmsRestoreTask extends AsyncTask<ThreadInfo, Integer, Integer>
     {
         // TODO Auto-generated method stub
         super.onPostExecute(result);
+        fragment.refresh();
         // 完成后关闭
         progressDialog.dismiss();
     }

@@ -128,8 +128,8 @@ public class AppThread implements Runnable
                 ShellUtil.Cmd(cmd);
                 // 记录备份时间
                 SimpleDateFormat formatter = new SimpleDateFormat(
-                        activity.getString(R.string.app_list_backup_time)
-                                + ":yyyy.MM.dd HH:mm");
+                        activity.getString(R.string.backup_time)
+                                + "yyyy.MM.dd HH:mm");
                 Date curDate = new Date(System.currentTimeMillis());
                 String time = formatter.format(curDate);
                 appInfo.setBackupTime(time);
