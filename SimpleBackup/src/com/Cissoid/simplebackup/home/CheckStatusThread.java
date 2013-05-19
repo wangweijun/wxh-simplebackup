@@ -1,14 +1,14 @@
-package com.Cissoid.simplebackup.home;
+package com.cissoid.simplebackup.home;
 
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.Status;
-import com.Cissoid.simplebackup.util.ShellUtil;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.Status;
+import com.cissoid.simplebackup.util.ShellUtil;
 
 public class CheckStatusThread implements Runnable
 {
@@ -17,7 +17,7 @@ public class CheckStatusThread implements Runnable
 
     public CheckStatusThread( HomePageFragment fragment )
     {
-        this.fragment=fragment;
+        this.fragment = fragment;
         this.activity = (MainActivity) fragment.getActivity();
     }
 

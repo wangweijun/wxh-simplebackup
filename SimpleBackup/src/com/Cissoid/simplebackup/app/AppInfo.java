@@ -1,15 +1,14 @@
-package com.Cissoid.simplebackup.app;
+package com.cissoid.simplebackup.app;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.SimpleBackupApplication;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.SimpleBackupApplication;
 
 /**
  * @author Wxh

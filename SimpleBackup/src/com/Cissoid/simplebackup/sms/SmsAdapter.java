@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.sms;
+package com.cissoid.simplebackup.sms;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -12,15 +12,14 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
 
 public class SmsAdapter extends BaseAdapter
 {
 
     private Fragment fragment;
     private Smslist smslist;
-    private boolean flag;
 
     public SmsAdapter( Fragment fragment , Smslist smslist )
     {
@@ -50,7 +49,6 @@ public class SmsAdapter extends BaseAdapter
     public View getView( final int position , View convertView ,
             ViewGroup parent )
     {
-        // TODO Auto-generated method stub
         View view = null;
         // 利用convertView提高效率
         if ( convertView != null )
@@ -79,12 +77,10 @@ public class SmsAdapter extends BaseAdapter
                         .setPositiveButton(R.string.sms_alert_backup,
                                 new DialogInterface.OnClickListener()
                                 {
-
                                     @Override
                                     public void onClick(
                                             DialogInterface dialog , int which )
                                     {
-                                        // TODO Auto-generated method stub
                                         new SmsBackupTask(
                                                 (MainActivity) fragment
                                                         .getActivity())
@@ -99,7 +95,6 @@ public class SmsAdapter extends BaseAdapter
                                     public void onClick(
                                             DialogInterface dialog , int which )
                                     {
-                                        // TODO Auto-generated method stub
                                         new SmsRestoreTask(
                                                 (MainActivity) fragment
                                                         .getActivity())
@@ -114,7 +109,7 @@ public class SmsAdapter extends BaseAdapter
         TextView snippet = (TextView) view.findViewById(R.id.sms_snippet);
         TextView backupInfo = (TextView) view
                 .findViewById(R.id.sms_backup_info);
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.sms_check);
+
         if ( threadInfo.getPerson().length() == 0 )
         {
             if ( address != null )
@@ -133,22 +128,6 @@ public class SmsAdapter extends BaseAdapter
             snippet.setText(threadInfo.getSnippet());
         if ( backupInfo != null )
             backupInfo.setText("test");
-        if ( checkBox != null && smslist.isMultiSelect() == true )
-        {
-            checkBox.setVisibility(View.VISIBLE);
-            checkBox.setChecked(flag);
-        }
-        else
-        {
-            checkBox.setChecked(false);
-            checkBox.setVisibility(View.INVISIBLE);
-        }
         return view;
-    }
-
-    public void setSelectAll( boolean flag )
-    {
-        this.flag = flag;
-
     }
 }

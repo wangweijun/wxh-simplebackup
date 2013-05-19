@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.app;
+package com.cissoid.simplebackup.app;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,12 +18,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.util.CopyUtil;
-import com.Cissoid.simplebackup.util.ShellUtil;
-import com.Cissoid.simplebackup.util.XmlUtil;
-import com.Cissoid.simplebackup.util.ZipUtil;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.util.CopyUtil;
+import com.cissoid.simplebackup.util.ShellUtil;
+import com.cissoid.simplebackup.util.XmlUtil;
+import com.cissoid.simplebackup.util.ZipUtil;
 
 public class AppThread implements Runnable
 {

@@ -1,11 +1,11 @@
-package com.Cissoid.simplebackup.util;
+package com.cissoid.simplebackup.util;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class ShellUtil
 {
-    static public boolean Cmd(String cmd)
+    static public boolean Cmd( String cmd )
     {
         // StringBuilder stringBuilder = null;
         try
@@ -36,7 +36,7 @@ public class ShellUtil
      *            √¸¡Ó
      * @return ≥…π¶£∫true  ß∞‹£∫false
      */
-    static public boolean RootCmd(String cmd)
+    static public boolean RootCmd( String cmd )
     {
         Process process = null;
         DataOutputStream os = null;
@@ -57,7 +57,7 @@ public class ShellUtil
         {
             try
             {
-                if (os != null)
+                if ( os != null )
                 {
                     os.close();
                 }

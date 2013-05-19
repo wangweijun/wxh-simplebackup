@@ -1,8 +1,7 @@
-package com.Cissoid.simplebackup.app;
+package com.cissoid.simplebackup.app;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.R;
 
 public class AppAdapter extends BaseAdapter
 {

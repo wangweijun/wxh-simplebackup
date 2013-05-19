@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.Cissoid.simplebackup.util;
+package com.cissoid.simplebackup.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -42,12 +42,12 @@ public class ZipUtil
      *             当压缩过程出错时抛出
      */
 
-    public static void zipFiles(Collection<File> resFileList, File zipFile)
+    public static void zipFiles( Collection<File> resFileList , File zipFile )
             throws IOException
     {
         ZipOutputStream zipout = new ZipOutputStream(new BufferedOutputStream(
                 new FileOutputStream(zipFile), BUFF_SIZE));
-        for (File resFile : resFileList)
+        for ( File resFile : resFileList )
         {
             zipFile(resFile, zipout, "");
         }
@@ -68,26 +68,26 @@ public class ZipUtil
      *             当解压缩过程出错时抛出
      */
 
-    public static void upZipFile(File zipFile, String folderPath)
-            throws ZipException, IOException
+    public static void upZipFile( File zipFile , String folderPath )
+            throws ZipException , IOException
     {
         File desDir = new File(folderPath);
-        if (!desDir.exists())
+        if ( !desDir.exists() )
         {
             desDir.mkdirs();
         }
         ZipFile zf = new ZipFile(zipFile);
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();)
+        for ( Enumeration<?> entries = zf.entries() ; entries.hasMoreElements() ; )
         {
             ZipEntry entry = ((ZipEntry) entries.nextElement());
             InputStream in = zf.getInputStream(entry);
             String str = folderPath + File.separator + entry.getName();
             str = new String(str.getBytes("8859_1"), "GB2312");
             File desFile = new File(str);
-            if (!desFile.exists())
+            if ( !desFile.exists() )
             {
                 File fileParentDir = desFile.getParentFile();
-                if (!fileParentDir.exists())
+                if ( !fileParentDir.exists() )
                 {
                     fileParentDir.mkdirs();
                 }
@@ -124,21 +124,21 @@ public class ZipUtil
      *             IO错误时抛出
      */
 
-    public static ArrayList<File> upZipSelectedFile(File zipFile,
-            String folderPath, String nameContains) throws ZipException,
+    public static ArrayList<File> upZipSelectedFile( File zipFile ,
+            String folderPath , String nameContains ) throws ZipException ,
             IOException
     {
         ArrayList<File> fileList = new ArrayList<File>();
         File desDir = new File(folderPath);
-        if (!desDir.exists())
+        if ( !desDir.exists() )
         {
             desDir.mkdir();
         }
         ZipFile zf = new ZipFile(zipFile);
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();)
+        for ( Enumeration<?> entries = zf.entries() ; entries.hasMoreElements() ; )
         {
             ZipEntry entry = ((ZipEntry) entries.nextElement());
-            if (entry.getName().contains(nameContains))
+            if ( entry.getName().contains(nameContains) )
             {
                 InputStream in = zf.getInputStream(entry);
                 String str = folderPath + File.separator + entry.getName();
@@ -146,10 +146,10 @@ public class ZipUtil
                 // str.getBytes("GB2312"),"8859_1" 输出
                 // str.getBytes("8859_1"),"GB2312" 输入
                 File desFile = new File(str);
-                if (!desFile.exists())
+                if ( !desFile.exists() )
                 {
                     File fileParentDir = desFile.getParentFile();
-                    if (!fileParentDir.exists())
+                    if ( !fileParentDir.exists() )
                     {
                         fileParentDir.mkdirs();
                     }
@@ -185,8 +185,8 @@ public class ZipUtil
      *             当解压缩过程出错时抛出
      */
 
-    public static ArrayList<String> getEntriesNames(File zipFile)
-            throws ZipException, IOException
+    public static ArrayList<String> getEntriesNames( File zipFile )
+            throws ZipException , IOException
     {
         ArrayList<String> entryNames = new ArrayList<String>();
         Enumeration<?> entries = getEntriesEnumeration(zipFile);
@@ -214,8 +214,8 @@ public class ZipUtil
      *             IO操作有误时抛出
      */
 
-    public static Enumeration<?> getEntriesEnumeration(File zipFile)
-            throws ZipException, IOException
+    public static Enumeration<?> getEntriesEnumeration( File zipFile )
+            throws ZipException , IOException
     {
         ZipFile zf = new ZipFile(zipFile);
         return zf.entries();
@@ -233,7 +233,7 @@ public class ZipUtil
      *             编码错误时抛出异常
      */
 
-    public static String getEntryComment(ZipEntry entry)
+    public static String getEntryComment( ZipEntry entry )
             throws UnsupportedEncodingException
     {
         return new String(entry.getComment().getBytes("GB2312"), "8859_1");
@@ -251,7 +251,7 @@ public class ZipUtil
      *             编码错误时抛出异常
      */
 
-    public static String getEntryName(ZipEntry entry)
+    public static String getEntryName( ZipEntry entry )
             throws UnsupportedEncodingException
     {
         return new String(entry.getName().getBytes("GB2312"), "8859_1");
@@ -276,17 +276,17 @@ public class ZipUtil
      *             当压缩过程出错时抛出
      */
 
-    private static void zipFile(File resFile, ZipOutputStream zipout,
-            String rootpath) throws FileNotFoundException, IOException
+    private static void zipFile( File resFile , ZipOutputStream zipout ,
+            String rootpath ) throws FileNotFoundException , IOException
     {
         rootpath = rootpath
                 + (rootpath.trim().length() == 0 ? "" : File.separator)
                 + resFile.getName();
         rootpath = new String(rootpath.getBytes("8859_1"), "GB2312");
-        if (resFile.isDirectory())
+        if ( resFile.isDirectory() )
         {
             File[] fileList = resFile.listFiles();
-            for (File file : fileList)
+            for ( File file : fileList )
             {
                 zipFile(file, zipout, rootpath);
             }

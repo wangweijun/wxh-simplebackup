@@ -15,7 +15,8 @@
         <RelativeLayout
             android:id="@+id/RelativeLayout1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:orientation="vertical" >
 
             <TextView
@@ -98,9 +99,7 @@
                 android:layout_below="@+id/home_status_bae"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/home_title_sdcard"
-                android:text=" "
-                android:textColor="#FFFFFF"
-                android:textSize="14sp" />
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/home_title_root"
@@ -136,23 +135,15 @@
                 android:textSize="20sp" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="          "
-            android:textSize="20sp"
-            android:visibility="visible" />
-
         <Button
             android:id="@+id/home_button_bae"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Button"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:textColor="@android:color/white"
             android:visibility="visible" />
-
     </LinearLayout>
 
 </ScrollView>

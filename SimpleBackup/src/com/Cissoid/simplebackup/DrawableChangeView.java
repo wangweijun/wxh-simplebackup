@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup;
+package com.cissoid.simplebackup;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -62,7 +62,7 @@ public class DrawableChangeView extends View
     @Override
     protected void onDraw( Canvas canvas )
     {
-        
+
         if ( mDrawables == null )
         {
             return;
