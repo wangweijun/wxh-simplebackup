@@ -1,22 +1,17 @@
 /**
  * 
  */
-package com.Cissoid.simplebackup.app;
+package com.cissoid.simplebackup.app;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
-import com.Cissoid.simplebackup.DrawableChangeView;
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.Status;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.Status;
 
 /**
  * 应用备份对应的Fragment

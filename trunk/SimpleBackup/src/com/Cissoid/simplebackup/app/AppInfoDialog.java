@@ -1,7 +1,6 @@
-package com.Cissoid.simplebackup.app;
+package com.cissoid.simplebackup.app;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -9,9 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.Cissoid.simplebackup.SimpleBackupApplication;
-import com.Cissoid.simplebackup.Status;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.Status;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.sms;
+package com.cissoid.simplebackup.sms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +12,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.util.XmlUtil;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.util.XmlUtil;
 
 public class Smslist
 {

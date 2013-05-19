@@ -45,5 +45,7 @@
     <string name="home_title_bae">BAE:</string>
     <string name="home_bae_success">Logged.Swipe up to logout.</string>
     <string name="home_bae_failed">Swipe up to login.</string>
+    <string name="home_button_login">Login</string>
+    <string name="home_button_logout">Log out</string>
 
 </resources>

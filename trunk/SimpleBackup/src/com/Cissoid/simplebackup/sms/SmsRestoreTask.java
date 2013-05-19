@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.sms;
+package com.cissoid.simplebackup.sms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,9 +14,9 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.util.XmlUtil;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.util.XmlUtil;
 
 /**
  * 恢复操作的异步类

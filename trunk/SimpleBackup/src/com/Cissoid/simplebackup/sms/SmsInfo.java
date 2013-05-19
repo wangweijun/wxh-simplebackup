@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.sms;
+package com.cissoid.simplebackup.sms;
 
 public class SmsInfo
 {

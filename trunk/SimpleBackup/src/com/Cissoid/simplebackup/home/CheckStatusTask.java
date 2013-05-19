@@ -1,23 +1,19 @@
-package com.Cissoid.simplebackup.home;
-
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.Status;
-import com.Cissoid.simplebackup.util.DBUtil;
-import com.Cissoid.simplebackup.util.ShellUtil;
-import com.wxhcn.simplebackup.R;
+package com.cissoid.simplebackup.home;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
+
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.util.DBUtil;
+import com.cissoid.simplebackup.util.ShellUtil;
 
 public class CheckStatusTask extends AsyncTask<Void, Void, Void>
 {
     private HomePageFragment fragment;
     private MainActivity activity;
-    private com.Cissoid.simplebackup.Status status;
+    private com.cissoid.simplebackup.Status status;
     private ProgressDialog progressDialog;
 
     public CheckStatusTask( HomePageFragment fragment )
@@ -42,7 +38,7 @@ public class CheckStatusTask extends AsyncTask<Void, Void, Void>
     protected Void doInBackground( Void... params )
     {
         // TODO Auto-generated method stub
-        status = new com.Cissoid.simplebackup.Status();
+        status = new com.cissoid.simplebackup.Status();
         // root»®œﬁ
         if ( ShellUtil.RootCmd("") )
             status.setRoot(true);
@@ -78,7 +74,7 @@ public class CheckStatusTask extends AsyncTask<Void, Void, Void>
         {
 
         }
-        if ( DBUtil.query().length() != 0 )
+        if ( DBUtil.query(activity).length() != 0 )
             status.setBae(true);
         try
         {

@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.app;
+package com.cissoid.simplebackup.app;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +12,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.os.Environment;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.util.XmlUtil;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.util.XmlUtil;
 
 public class Applist
 {

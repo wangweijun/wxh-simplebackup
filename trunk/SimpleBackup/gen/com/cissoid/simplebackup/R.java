@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.wxhcn.simplebackup;
+package com.cissoid.simplebackup;
 
 public final class R {
     public static final class attr {
@@ -21,7 +21,7 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int holo=0x7f020000;
+        public static final int blue=0x7f020000;
         public static final int ic_action_accept=0x7f020001;
         public static final int ic_action_cancel=0x7f020002;
         public static final int ic_action_delete=0x7f020003;
@@ -32,12 +32,13 @@ public final class R {
         public static final int ic_action_select_all=0x7f020008;
         public static final int ic_action_settings=0x7f020009;
         public static final int ic_launcher=0x7f02000a;
-        public static final int white=0x7f02000b;
+        public static final int shape=0x7f02000b;
+        public static final int white=0x7f02000c;
     }
     public static final class id {
         public static final int FrameLayout1=0x7f080000;
-        public static final int MENU_GROUP_MAIN=0x7f080027;
-        public static final int MENU_GROUP_MULTI=0x7f080029;
+        public static final int MENU_GROUP_MAIN=0x7f080025;
+        public static final int MENU_GROUP_MULTI=0x7f080027;
         public static final int RelativeLayout1=0x7f08000d;
         public static final int RelativeLayout2=0x7f08000f;
         public static final int app_backup_info=0x7f080013;
@@ -66,20 +67,18 @@ public final class R {
         public static final int home_title_busybox=0x7f080019;
         public static final int home_title_root=0x7f080016;
         public static final int home_title_sdcard=0x7f08001c;
-        public static final int menu_accept=0x7f08002b;
-        public static final int menu_cancel=0x7f08002c;
-        public static final int menu_multi_select=0x7f080028;
-        public static final int menu_select_all=0x7f08002a;
+        public static final int menu_accept=0x7f080029;
+        public static final int menu_cancel=0x7f08002a;
+        public static final int menu_multi_select=0x7f080026;
+        public static final int menu_select_all=0x7f080028;
         public static final int pager=0x7f080002;
         public static final int pager_title_strip=0x7f080003;
         public static final int scrollView1=0x7f080014;
-        public static final int sms_address=0x7f080022;
-        public static final int sms_backup_info=0x7f080026;
-        public static final int sms_check=0x7f080025;
-        public static final int sms_count=0x7f080023;
-        public static final int sms_person=0x7f080021;
-        public static final int sms_snippet=0x7f080024;
-        public static final int textView1=0x7f080020;
+        public static final int sms_address=0x7f080021;
+        public static final int sms_backup_info=0x7f080024;
+        public static final int sms_count=0x7f080022;
+        public static final int sms_person=0x7f080020;
+        public static final int sms_snippet=0x7f080023;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -110,6 +109,8 @@ public final class R {
         public static final int home_bae_success=0x7f05002a;
         public static final int home_busybox_false=0x7f050027;
         public static final int home_busybox_success=0x7f050026;
+        public static final int home_button_login=0x7f05002c;
+        public static final int home_button_logout=0x7f05002d;
         public static final int home_root_false=0x7f050025;
         public static final int home_root_success=0x7f050024;
         public static final int home_sdcard_false=0x7f050023;

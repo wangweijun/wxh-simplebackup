@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.util;
+package com.cissoid.simplebackup.util;
 
 import android.util.Base64;
 

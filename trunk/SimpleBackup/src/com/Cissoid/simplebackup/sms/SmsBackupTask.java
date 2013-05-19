@@ -1,4 +1,4 @@
-package com.Cissoid.simplebackup.sms;
+package com.cissoid.simplebackup.sms;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,9 +17,10 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.Cissoid.simplebackup.MainActivity;
-import com.Cissoid.simplebackup.util.XmlUtil;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.MainActivity;
+import com.cissoid.simplebackup.R;
+import com.cissoid.simplebackup.util.BAEUtil;
+import com.cissoid.simplebackup.util.XmlUtil;
 
 /**
  * 处理短信备份的异步类
@@ -27,7 +28,7 @@ import com.wxhcn.simplebackup.R;
  * @author Wxh
  * 
  */
-public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, Integer>
+public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, ThreadInfo>
 {
     /**
      * 读取短信的Uri
@@ -55,11 +56,13 @@ public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, Integer>
     }
 
     @Override
-    protected Integer doInBackground( ThreadInfo... params )
+    protected ThreadInfo doInBackground( ThreadInfo... params )
     {
+        ThreadInfo result = null;
         ContentResolver contentResolver = activity.getContentResolver();
         for ( ThreadInfo threadInfo : params )
         {
+            result = threadInfo;
             // 显示进度条
             progressDialog.setMax((int) threadInfo.getNumber());
             progressDialog.setProgress(0);
@@ -163,7 +166,7 @@ public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, Integer>
                 }
             }
         }
-        return null;
+        return result;
     }
 
     @Override
@@ -174,9 +177,10 @@ public class SmsBackupTask extends AsyncTask<ThreadInfo, Integer, Integer>
     }
 
     @Override
-    protected void onPostExecute( Integer result )
+    protected void onPostExecute( ThreadInfo result )
     {
         super.onPostExecute(result);
+        BAEUtil.upload(activity, result);
         progressDialog.dismiss();
     }
 }

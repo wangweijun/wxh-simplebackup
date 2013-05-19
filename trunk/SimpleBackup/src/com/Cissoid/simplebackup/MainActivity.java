@@ -1,7 +1,6 @@
-package com.Cissoid.simplebackup;
+package com.cissoid.simplebackup;
 
 import java.io.File;
-import java.lang.reflect.Field;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -19,19 +18,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.AttributeSet;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewConfiguration;
 
-import com.Cissoid.simplebackup.app.AppFragment;
-import com.Cissoid.simplebackup.home.HomePageFragment;
-import com.Cissoid.simplebackup.sms.SmsBackupTask;
-import com.Cissoid.simplebackup.sms.SmsFragment;
-import com.Cissoid.simplebackup.sms.ThreadInfo;
-import com.Cissoid.simplebackup.util.DBUtil;
-import com.Cissoid.simplebackup.util.ShellUtil;
-import com.wxhcn.simplebackup.R;
+import com.cissoid.simplebackup.app.AppFragment;
+import com.cissoid.simplebackup.sms.SmsFragment;
+import com.cissoid.simplebackup.util.DBUtil;
+import com.cissoid.simplebackup.util.ShellUtil;
 
 /**
  * 
@@ -148,7 +139,7 @@ public class MainActivity extends FragmentActivity
         drawableChangeView = (DrawableChangeView) this
                 .findViewById(R.id.drawableChangeView);
         Drawable[] drawables = new Drawable[3];
-        drawables[0] = this.getResources().getDrawable(R.drawable.holo);
+        drawables[0] = this.getResources().getDrawable(R.drawable.blue);
         drawables[1] = this.getResources().getDrawable(R.drawable.white);
         drawables[2] = this.getResources().getDrawable(R.drawable.white);
         drawableChangeView.setDrawables(drawables);
@@ -181,6 +172,8 @@ public class MainActivity extends FragmentActivity
 
             }
         });
+
+        DBUtil.create(this);
     }
 
     @Override
@@ -298,7 +291,7 @@ public class MainActivity extends FragmentActivity
             status.setSdcard(true);
 
         // BAE
-        if ( DBUtil.query().length() != 0 )
+        if ( DBUtil.query(this).length() != 0 )
             status.setBae(true);
         return status;
     }
