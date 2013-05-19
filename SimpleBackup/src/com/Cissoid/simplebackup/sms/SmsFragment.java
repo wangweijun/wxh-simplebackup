@@ -39,6 +39,12 @@ public class SmsFragment extends ListFragment
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    public void refresh()
+    {
+        smsAdapter.notifyDataSetChanged();
+        smsAdapter.notifyDataSetInvalidated();
+    }
+
     /**
      * @return the status
      */

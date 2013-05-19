@@ -102,9 +102,8 @@ public final class R {
         public static final int app_dialog_button_restore=0x7f05000a;
         public static final int app_dialog_button_uninstall=0x7f05000b;
         public static final int app_dialog_restore_bar=0x7f050028;
-        public static final int app_list_backup_time=0x7f050014;
-        public static final int app_list_backup_time_empty=0x7f050015;
         public static final int app_name=0x7f050000;
+        public static final int backup_time=0x7f050014;
         public static final int home_bae_failed=0x7f05002b;
         public static final int home_bae_success=0x7f05002a;
         public static final int home_busybox_false=0x7f050027;
@@ -128,6 +127,7 @@ public final class R {
         public static final int menu_accept=0x7f050008;
         public static final int menu_add=0x7f050006;
         public static final int menu_settings=0x7f050007;
+        public static final int no_backup_file=0x7f050015;
         public static final int notification_backup_complete=0x7f050016;
         public static final int sms_alert_backup=0x7f050018;
         public static final int sms_alert_message=0x7f050017;

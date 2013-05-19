@@ -3,6 +3,7 @@ package com.cissoid.simplebackup.sms;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,9 +81,7 @@ public class SmsAdapter extends BaseAdapter
                                     public void onClick(
                                             DialogInterface dialog , int which )
                                     {
-                                        new SmsBackupTask(
-                                                (MainActivity) fragment
-                                                        .getActivity())
+                                        new SmsBackupTask((SmsFragment) fragment)
                                                 .execute(threadInfo);
                                     }
                                 })
@@ -95,8 +94,7 @@ public class SmsAdapter extends BaseAdapter
                                             DialogInterface dialog , int which )
                                     {
                                         new SmsRestoreTask(
-                                                (MainActivity) fragment
-                                                        .getActivity())
+                                                (SmsFragment) fragment)
                                                 .execute(threadInfo);
                                     }
                                 }).show();
@@ -110,23 +108,28 @@ public class SmsAdapter extends BaseAdapter
                 .findViewById(R.id.sms_backup_info);
 
         if ( threadInfo.getPerson().length() == 0 )
+            address.setText(threadInfo.getAddress());
+        else
         {
-            if ( address != null )
-                address.setText(threadInfo.getAddress());
+            person.setText(threadInfo.getPerson());
+            address.setText("(" + threadInfo.getAddress() + ")");
+        }
+
+        count.setText(threadInfo.getNumber() + "Ìõ");
+
+        snippet.setText(threadInfo.getSnippet());
+        if ( threadInfo.getBakNumber() != 0 )
+        {
+            backupInfo.setText(fragment.getString(R.string.backup_time)
+                    + threadInfo.getBackupTime() + ","
+                    + threadInfo.getBakNumber() + "Ìõ");
+            backupInfo.setTextColor(Color.rgb(51, 181, 229));
         }
         else
         {
-            if ( person != null )
-                person.setText(threadInfo.getPerson());
-            if ( address != null )
-                address.setText("(" + threadInfo.getAddress() + ")");
+            backupInfo.setText(R.string.no_backup_file);
+            backupInfo.setTextColor(Color.rgb(255, 68, 68));
         }
-        if ( count != null )
-            count.setText(threadInfo.getNumber() + "Ìõ");
-        if ( snippet != null )
-            snippet.setText(threadInfo.getSnippet());
-        if ( backupInfo != null )
-            backupInfo.setText("test");
         return view;
     }
 }

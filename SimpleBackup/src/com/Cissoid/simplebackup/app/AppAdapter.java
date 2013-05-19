@@ -124,9 +124,4 @@ public class AppAdapter extends BaseAdapter
         }
         return view;
     }
-
-    public void setSelectAll( boolean flag )
-    {
-        this.flag = flag;
-    }
 }

@@ -67,7 +67,7 @@ public class AppInfo
     public AppInfo( MainActivity activity )
     {
         this.activity = activity;
-        backupTime = activity.getString(R.string.app_list_backup_time_empty);
+        backupTime = activity.getString(R.string.no_backup_file);
     }
 
     public void backup( int mode )
