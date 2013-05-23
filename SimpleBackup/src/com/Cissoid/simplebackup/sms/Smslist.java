@@ -194,24 +194,4 @@ public class Smslist
     {
         return threadInfos.get(position);
     }
-
-    /**
-     * 设置多选标志
-     * 
-     * @param flag
-     */
-    public void setMultiSelect( boolean flag )
-    {
-        isMultiselect = flag;
-    }
-
-    /**
-     * 判断是否多选
-     * 
-     * @return 多选状态
-     */
-    public boolean isMultiSelect()
-    {
-        return isMultiselect;
-    }
 }
