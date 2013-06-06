@@ -1,11 +1,9 @@
-package com.cissoid.simplebackup.util;
+package com.Cissoid.simplebackup.util;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,10 +11,10 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.util.Xml;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.app.AppInfo;
-import com.cissoid.simplebackup.sms.SmsInfo;
-import com.cissoid.simplebackup.sms.ThreadInfo;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.app.AppInfo;
+import com.Cissoid.simplebackup.sms.SmsInfo;
+import com.Cissoid.simplebackup.sms.ThreadInfo;
 
 /**
  * 

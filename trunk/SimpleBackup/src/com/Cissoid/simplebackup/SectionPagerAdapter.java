@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup;
+package com.Cissoid.simplebackup;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,10 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.app.AppFragment;
-import com.cissoid.simplebackup.home.HomePageFragment;
-import com.cissoid.simplebackup.sms.SmsFragment;
+import com.Cissoid.simplebackup.app.AppFragment;
+import com.Cissoid.simplebackup.home.HomePageFragment;
+import com.Cissoid.simplebackup.sms.SmsFragment;
 
 /**
  * 

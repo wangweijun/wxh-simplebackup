@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <com.cissoid.simplebackup.DrawableChangeView
+    <com.Cissoid.simplebackup.DrawableChangeView
         android:id="@+id/drawableChangeView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.sms;
+package com.Cissoid.simplebackup.sms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +12,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.util.XmlUtil;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.util.XmlUtil;
 
 public class Smslist
 {
@@ -36,10 +36,6 @@ public class Smslist
      * 保存对话信息的列表
      */
     private ArrayList<ThreadInfo> threadInfos;
-    /**
-     * 列表多选标志
-     */
-    private boolean isMultiselect;
 
     public Smslist( MainActivity activity )
     {

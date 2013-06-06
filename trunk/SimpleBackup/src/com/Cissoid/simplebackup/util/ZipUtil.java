@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.cissoid.simplebackup.util;
+package com.Cissoid.simplebackup.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

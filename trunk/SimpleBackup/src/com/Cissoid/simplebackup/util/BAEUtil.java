@@ -1,16 +1,15 @@
-package com.cissoid.simplebackup.util;
+package com.Cissoid.simplebackup.util;
 
 import android.content.ContentValues;
 import android.os.Environment;
 
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.home.HomePageFragment;
+import com.Cissoid.simplebackup.sms.ThreadInfo;
 import com.baidu.oauth.BaiduOAuth;
 import com.baidu.oauth.BaiduOAuth.BaiduOAuthResponse;
-import com.baidu.pcs.BaiduPCSActionInfo;
 import com.baidu.pcs.BaiduPCSClient;
 import com.baidu.pcs.BaiduPCSStatusListener;
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.home.HomePageFragment;
-import com.cissoid.simplebackup.sms.ThreadInfo;
 
 public class BAEUtil
 {
@@ -85,36 +84,32 @@ public class BAEUtil
             {
                 public void run()
                 {
-
+                    BaiduPCSClient api = new BaiduPCSClient();
+                    api.setAccessToken(mbOauth);
                     String tmpFile = Environment.getExternalStorageDirectory()
                             + "/SimpleBackup/SMS/" + threadInfo.getAddress()
                             + ".xml";
-                    // String tmpFile = "/mnt/sdcard/DCIM/File/1.txt";
+                    api.deleteFile(mbRootPath + "/SMS/"
+                            + threadInfo.getAddress() + ".xml");
+                    api.uploadFile(tmpFile,
+                            mbRootPath + "/SMS/" + threadInfo.getAddress()
+                                    + ".xml", new BaiduPCSStatusListener()
+                            {
+                                @Override
+                                public void onProgress( long bytes , long total )
+                                {
+                                    // TODO Auto-generated method stub
 
-                    BaiduPCSClient api = new BaiduPCSClient();
-                    api.setAccessToken(mbOauth);
+                                    final long bs = bytes;
+                                    final long tl = total;
+                                }
 
-                    final BaiduPCSActionInfo.PCSFileInfoResponse response = api
-                            .uploadFile(tmpFile, mbRootPath + "/SMS/"
-                                    + threadInfo.getAddress() + ".xml",
-                                    new BaiduPCSStatusListener()
-                                    {
-                                        @Override
-                                        public void onProgress( long bytes ,
-                                                long total )
-                                        {
-                                            // TODO Auto-generated method stub
-
-                                            final long bs = bytes;
-                                            final long tl = total;
-                                        }
-
-                                        @Override
-                                        public long progressInterval()
-                                        {
-                                            return 1000;
-                                        }
-                                    });
+                                @Override
+                                public long progressInterval()
+                                {
+                                    return 1000;
+                                }
+                            });
                 }
             });
             workThread.start();

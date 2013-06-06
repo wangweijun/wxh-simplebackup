@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup;
+package com.Cissoid.simplebackup;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

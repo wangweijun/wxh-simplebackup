@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup;
+package com.Cissoid.simplebackup;
 
 public class Status
 {

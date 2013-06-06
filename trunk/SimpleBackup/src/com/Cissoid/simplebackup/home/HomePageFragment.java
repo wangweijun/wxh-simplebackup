@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.cissoid.simplebackup.home;
+package com.Cissoid.simplebackup.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.Status;
-import com.cissoid.simplebackup.util.BAEUtil;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.Status;
+import com.Cissoid.simplebackup.util.BAEUtil;
 
 /**
  * @author Wxh
@@ -40,8 +40,7 @@ public class HomePageFragment extends Fragment
     public void onCreate( Bundle savedInstanceState )
     {
         super.onCreate(savedInstanceState);
-        // ((SimpleBackupApplication) (getActivity().getApplication()))
-        // .getExecutorService().submit(new CheckStatusThread(this));
+        //×´Ì¬¼ì²â
         new CheckStatusTask(this).execute();
     }
 
@@ -63,7 +62,7 @@ public class HomePageFragment extends Fragment
         messageBusybox = (TextView) rootView
                 .findViewById(R.id.home_message_busybox);
         messageBae = (TextView) rootView.findViewById(R.id.home_message_bae);
-        baeButton = (Button) rootView.findViewById(R.id.home_button_bae);
+        baeButton = (Button) rootView.findViewById(R.id.app_dialog_restore_app);
         if ( status != null )
             refresh(status);
         return rootView;

@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.sms;
+package com.Cissoid.simplebackup.sms;
 
 /**
  * 存储每一个对话的Bean类，用于在列表中显示

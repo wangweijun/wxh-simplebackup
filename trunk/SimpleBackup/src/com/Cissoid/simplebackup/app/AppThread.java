@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.app;
+package com.Cissoid.simplebackup.app;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,12 +18,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.util.CopyUtil;
-import com.cissoid.simplebackup.util.ShellUtil;
-import com.cissoid.simplebackup.util.XmlUtil;
-import com.cissoid.simplebackup.util.ZipUtil;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.util.CopyUtil;
+import com.Cissoid.simplebackup.util.ShellUtil;
+import com.Cissoid.simplebackup.util.XmlUtil;
+import com.Cissoid.simplebackup.util.ZipUtil;
 
 public class AppThread implements Runnable
 {
@@ -62,6 +62,7 @@ public class AppThread implements Runnable
             restore();
             break;
         case MODE_DELETE :
+            delete();
             break;
         default :
             break;
@@ -213,6 +214,13 @@ public class AppThread implements Runnable
                         + appInfo.getPackageName() + ".tar.gz";
                 ShellUtil.RootCmd(cmd);
             }
+            // 删除临时文件
+            String cmd = "rm -r ";
+            if ( mode != MODE_RESTORE_DATA )
+                cmd += restorePath + appInfo.getPackageName() + ".apk ";
+            if ( mode != MODE_RESTORE_APP )
+                cmd += restorePath + appInfo.getPackageName() + ".tar.gz";
+            ShellUtil.Cmd(cmd);
             // 关闭对话框
             Message msg = new Message();
             msg.what = MainActivity.HANDLER_CLOSE_PROGRESSDIALOG;
@@ -224,6 +232,39 @@ public class AppThread implements Runnable
             msg = new Message();
             msg.what = MainActivity.HANDLER_INVALIDATE;
             handler.sendMessage(msg);
+        }
+    }
+
+    /**
+     * 删除备份文件
+     */
+    private void delete()
+    {
+        for ( AppInfo appInfo : appInfos )
+        {
+            showDialog("正在删除备份...", appInfo.getName());
+
+            // 删除备份
+            File file = new File(Environment.getExternalStorageDirectory()
+                    + "/SimpleBackup/" + appInfo.getPackageName() + "zip");
+            if ( file.exists() )
+                file.delete();
+            // 删除配置
+            file = new File(Environment.getExternalStorageDirectory()
+                    + "/SimpleBackup/" + appInfo.getPackageName() + ".xml");
+            if ( file.exists() )
+                file.delete();
+            showNotification(appInfo.getId(), "已删除备份文件:" + appInfo.getName(),
+                    "已删除", appInfo.getName(), Notification.FLAG_ONLY_ALERT_ONCE);
+            appInfo.type = AppInfo.TYPE_LOCAL;
+            Message msg = new Message();
+            msg.what = MainActivity.HANDLER_INVALIDATE;
+            handler.sendMessage(msg);
+            // 关闭对话框
+            msg = new Message();
+            msg.what = MainActivity.HANDLER_CLOSE_PROGRESSDIALOG;
+            handler.sendMessage(msg);
+
         }
     }
 

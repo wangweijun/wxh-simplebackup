@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.sms;
+package com.Cissoid.simplebackup.sms;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.Status;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.Status;
 
 public class SmsFragment extends ListFragment
 {
