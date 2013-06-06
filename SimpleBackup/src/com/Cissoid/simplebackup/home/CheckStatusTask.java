@@ -1,19 +1,19 @@
-package com.cissoid.simplebackup.home;
+package com.Cissoid.simplebackup.home;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Environment;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.util.DBUtil;
-import com.cissoid.simplebackup.util.ShellUtil;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.util.DBUtil;
+import com.Cissoid.simplebackup.util.ShellUtil;
 
 public class CheckStatusTask extends AsyncTask<Void, Void, Void>
 {
     private HomePageFragment fragment;
     private MainActivity activity;
-    private com.cissoid.simplebackup.Status status;
+    private com.Cissoid.simplebackup.Status status;
     private ProgressDialog progressDialog;
 
     public CheckStatusTask( HomePageFragment fragment )
@@ -39,7 +39,7 @@ public class CheckStatusTask extends AsyncTask<Void, Void, Void>
     protected Void doInBackground( Void... params )
     {
         // TODO Auto-generated method stub
-        status = new com.cissoid.simplebackup.Status();
+        status = new com.Cissoid.simplebackup.Status();
         // root权限
         if ( ShellUtil.RootCmd("") )
             status.setRoot(true);
@@ -75,6 +75,7 @@ public class CheckStatusTask extends AsyncTask<Void, Void, Void>
         {
 
         }
+        //百度云是否登录
         if ( DBUtil.query(activity).length() != 0 )
             status.setBae(true);
         try

@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.util;
+package com.Cissoid.simplebackup.util;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

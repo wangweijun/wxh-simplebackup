@@ -136,7 +136,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/home_button_bae"
+            android:id="@+id/app_dialog_restore_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

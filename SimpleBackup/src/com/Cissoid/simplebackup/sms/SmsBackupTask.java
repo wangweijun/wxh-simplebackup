@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.sms;
+package com.Cissoid.simplebackup.sms;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,10 +19,10 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.util.BAEUtil;
-import com.cissoid.simplebackup.util.XmlUtil;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.util.BAEUtil;
+import com.Cissoid.simplebackup.util.XmlUtil;
 
 /**
  * 处理短信备份的异步类

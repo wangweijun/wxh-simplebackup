@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.app;
+package com.Cissoid.simplebackup.app;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -6,9 +6,9 @@ import android.net.Uri;
 import android.os.Handler;
 import android.view.View;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.SimpleBackupApplication;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.SimpleBackupApplication;
 
 /**
  * @author Wxh
@@ -90,6 +90,15 @@ public class AppInfo
         application.getExecutorService().submit(thread);
     }
 
+    public void delete()
+    {
+        SimpleBackupApplication application = (SimpleBackupApplication) activity
+                .getApplication();
+        AppThread thread = new AppThread(activity, this);
+        thread.mode = AppThread.MODE_DELETE;
+        application.getExecutorService().submit(thread);
+    }
+
     public void uninstall()
     {
         Uri uri = Uri.fromParts("package", this.getPackageName(), null);
@@ -121,6 +130,8 @@ public class AppInfo
         default :
             break;
         }
+        if ( type == TYPE_LOCAL )
+            backupInfo = activity.getString(R.string.no_backup_file);
         return backupInfo;
     }
 

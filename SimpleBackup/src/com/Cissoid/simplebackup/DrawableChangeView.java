@@ -1,8 +1,7 @@
-package com.cissoid.simplebackup;
+package com.Cissoid.simplebackup;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;

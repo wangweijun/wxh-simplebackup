@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.sms;
+package com.Cissoid.simplebackup.sms;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.R;
 
 public class SmsAdapter extends BaseAdapter
 {

@@ -1,14 +1,14 @@
-package com.cissoid.simplebackup.home;
+package com.Cissoid.simplebackup.home;
 
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.Status;
-import com.cissoid.simplebackup.util.ShellUtil;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.Status;
+import com.Cissoid.simplebackup.util.ShellUtil;
 
 public class CheckStatusThread implements Runnable
 {

@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup.util;
+package com.Cissoid.simplebackup.util;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.MainActivity;
 
 public class DBUtil
 {

@@ -2,16 +2,12 @@
 <resources>
 
     <string name="app_name">简单备份</string>
-    <string name="action_settings">Settings</string>
     <string name="title_home">首页</string>
     <string name="title_app">应用</string>
     <string name="title_sms">短信</string>
     <string name="sms_list_no_message">无信息</string>
-    <string name="menu_add">Add</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_accept">Accept</string>
     <string name="app_dialog_button_backup_all">全部</string>
-    <string name="app_dialog_button_restore">还原</string>
+    <string name="app_dialog_button_restore_all">全部</string>
     <string name="app_dialog_button_uninstall">卸载</string>
     <string name="app_dialog_button_delete">删除备份</string>
     <string name="main_dialog_checking_status">正在检查...</string>
@@ -47,5 +43,7 @@
     <string name="home_bae_failed">上滑以登录</string>
     <string name="home_button_login">登录</string>
     <string name="home_button_logout">登出</string>
+    <string name="app_dialog_button_restore_app">应用</string>
+    <string name="app_dialog_button_restore_data">数据</string>
 
 </resources>

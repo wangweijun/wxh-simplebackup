@@ -1,9 +1,10 @@
-package com.cissoid.simplebackup.sms;
+package com.Cissoid.simplebackup.sms;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -14,9 +15,9 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.cissoid.simplebackup.MainActivity;
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.util.XmlUtil;
+import com.Cissoid.simplebackup.MainActivity;
+import com.Cissoid.simplebackup.R;
+import com.Cissoid.simplebackup.util.XmlUtil;
 
 /**
  * 恢复操作的异步类
@@ -55,7 +56,6 @@ public class SmsRestoreTask extends AsyncTask<ThreadInfo, Integer, Integer>
     @Override
     protected void onPreExecute()
     {
-
         super.onPreExecute();
     }
 
@@ -81,6 +81,7 @@ public class SmsRestoreTask extends AsyncTask<ThreadInfo, Integer, Integer>
                 if ( smsInfos != null )
                 {
                     progressDialog.setMax((int) smsInfos.size());
+
                     int num = 1;
                     // 把列表中每一个SmsInfo对象插入数据库
                     for ( SmsInfo smsInfo : smsInfos )
@@ -91,8 +92,13 @@ public class SmsRestoreTask extends AsyncTask<ThreadInfo, Integer, Integer>
                                 new String[]
                                 { smsInfo.getDate() }, null);
                         // 存在则跳过
-                        if ( cursor.moveToFirst() )
-                            continue;
+                        if ( cursor != null )
+                            if ( cursor.moveToFirst() )
+                            {
+                                num++;
+                                continue;
+                            }
+
                         ContentValues values = new ContentValues();
                         values.put("address", smsInfo.getAddress());
                         values.put("date", smsInfo.getDate());

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.cissoid.simplebackup;
+package com.Cissoid.simplebackup;
 
 public final class R {
     public static final class attr {
@@ -48,13 +48,13 @@ public final class R {
         public static final int app_dialog_backup_data=0x7f080006;
         public static final int app_dialog_delete=0x7f08000b;
         public static final int app_dialog_restore_all=0x7f080008;
+        public static final int app_dialog_restore_app=0x7f080009;
+        public static final int app_dialog_restore_data=0x7f08000a;
         public static final int app_dialog_uninstall=0x7f08000c;
         public static final int app_icon=0x7f08000e;
         public static final int app_name=0x7f080010;
         public static final int app_version=0x7f080011;
-        public static final int button2=0x7f08000a;
         public static final int drawableChangeView=0x7f080001;
-        public static final int home_button_bae=0x7f080009;
         public static final int home_message_bae=0x7f08001f;
         public static final int home_message_busybox=0x7f08001e;
         public static final int home_message_root=0x7f08001b;
@@ -99,7 +99,9 @@ public final class R {
         public static final int app_dialog_button_backup_app=0x7f050011;
         public static final int app_dialog_button_backup_data=0x7f050012;
         public static final int app_dialog_button_delete=0x7f05000c;
-        public static final int app_dialog_button_restore=0x7f05000a;
+        public static final int app_dialog_button_restore_all=0x7f05000a;
+        public static final int app_dialog_button_restore_app=0x7f05002e;
+        public static final int app_dialog_button_restore_data=0x7f05002f;
         public static final int app_dialog_button_uninstall=0x7f05000b;
         public static final int app_dialog_restore_bar=0x7f050028;
         public static final int app_name=0x7f050000;

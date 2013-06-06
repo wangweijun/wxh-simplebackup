@@ -1,4 +1,4 @@
-package com.cissoid.simplebackup;
+package com.Cissoid.simplebackup;
 
 import java.io.File;
 
@@ -19,11 +19,10 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
-import com.cissoid.simplebackup.R;
-import com.cissoid.simplebackup.app.AppFragment;
-import com.cissoid.simplebackup.sms.SmsFragment;
-import com.cissoid.simplebackup.util.DBUtil;
-import com.cissoid.simplebackup.util.ShellUtil;
+import com.Cissoid.simplebackup.app.AppFragment;
+import com.Cissoid.simplebackup.sms.SmsFragment;
+import com.Cissoid.simplebackup.util.DBUtil;
+import com.Cissoid.simplebackup.util.ShellUtil;
 
 /**
  * 
@@ -150,6 +149,7 @@ public class MainActivity extends FragmentActivity
                 getSupportFragmentManager(), this);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new OnPageChangeListener()
         {
